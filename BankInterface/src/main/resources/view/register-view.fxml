@@ -8,14 +8,18 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="428.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.RegisterController">
    <children>
-      <Label contentDisplay="CENTER" prefHeight="65.0" prefWidth="458.0" text="Personal Information :">
-         <font>
-            <Font size="18.0" />
-         </font>
+      <HBox prefHeight="57.0" prefWidth="618.0">
          <VBox.margin>
-            <Insets left="10.0" />
+            <Insets left="10.0" top="10.0" />
          </VBox.margin>
-      </Label>
+         <children>
+            <Label contentDisplay="CENTER" prefHeight="51.0" prefWidth="553.0" text="Personal Information :">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
       <SplitPane dividerPositions="0.15246015246015246" prefHeight="7.0" prefWidth="600.0">
          <items>
             <Label prefHeight="38.0" prefWidth="85.0" text="First Name :">
@@ -102,6 +106,7 @@
             <Insets right="20.0" />
          </VBox.margin>
          <buttons>
+            <ProgressIndicator fx:id="progressIndicator" prefHeight="23.0" progress="0.0" />
             <CheckBox fx:id="termsCheckBox" mnemonicParsing="false" text="I agree with the Terms, Conditions and Privacy Policy">
                <padding>
                   <Insets right="10.0" />

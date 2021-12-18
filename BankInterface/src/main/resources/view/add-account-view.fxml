@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="317.0" prefWidth="490.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.AddAccountContent">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="88.0" prefWidth="462.0" text="     Please input the type and the initial amount you want to deposit in the new account :" wrapText="true">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <VBox.margin>
+            <Insets left="5.0" right="5.0" />
+         </VBox.margin>
+      </Label>
+      <Pane prefHeight="35.0" prefWidth="462.0" />
+      <HBox layoutX="10.0" layoutY="98.0" prefHeight="52.0" prefWidth="462.0">
+         <children>
+            <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="238.0" text="Account Type :">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <ChoiceBox prefHeight="17.0" prefWidth="150.0" />
+         </children>
+      </HBox>
+      <HBox prefHeight="75.0" prefWidth="462.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="238.0" text="Initial Deposit :">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <TextField prefHeight="35.0" prefWidth="152.0" />
+            <Label alignment="CENTER" prefHeight="34.0" prefWidth="24.0" text="\$">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <Label alignment="CENTER_RIGHT" prefHeight="58.0" prefWidth="448.0" text="Please take into consideration that the minimum deposit amount is 50 $." />
+      <HBox prefHeight="68.0" prefWidth="462.0">
+         <children>
+            <Pane prefHeight="0.0" prefWidth="200.0" />
+            <Label prefHeight="59.0" prefWidth="154.0" text="I agree to Privacy Policy :" />
+            <ToggleButton minWidth="53.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="58.0">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin></ToggleButton>
+          <Button minWidth="60.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="60.0">
+               <graphic>
+                  <ImageView fitHeight="53.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../plus.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+         <VBox.margin>
+            <Insets right="10.0" />
+         </VBox.margin>
+      </HBox>
+   </children>
+</VBox>
