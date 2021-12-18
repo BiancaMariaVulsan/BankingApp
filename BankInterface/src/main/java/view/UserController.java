@@ -240,7 +240,7 @@ public class UserController implements Initializable {
 
             }
         });
-        addAccountButton.fire();
+        displayAccountsButton.fire();
         exitButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -257,14 +257,6 @@ public class UserController implements Initializable {
                 }
             }
         });
-//        transactionsChart.setTitle("Transactions");
-//        ObservableList<PieChart.Data> pieChartData =
-//                FXCollections.observableArrayList(
-//                        new PieChart.Data("Food", 13),
-//                        new PieChart.Data("Utilities", 25),
-//                        new PieChart.Data("Clothing", 10),
-//                        new PieChart.Data("Healthcare", 22),
-//                        new PieChart.Data("Other", 30));
-//        transactionsChart.setData(pieChartData);
+
     }
 }

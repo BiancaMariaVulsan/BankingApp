@@ -33,9 +33,10 @@
                <children>
                   <TableView layoutY="23.0" prefHeight="258.0" prefWidth="230.0">
                     <columns>
-                      <TableColumn prefWidth="87.59997254610062" text="Acc. Number" />
-                      <TableColumn prefWidth="66.79998779296875" text="Balance" />
-                        <TableColumn prefWidth="74.39995422363282" text="Rate" />
+                      <TableColumn prefWidth="62.99999922513962" text="Acc. Num." />
+                        <TableColumn minWidth="0.0" prefWidth="83.40002822875977" text="DepositBox Id" />
+                      <TableColumn prefWidth="49.0" text="Balance" />
+                        <TableColumn prefWidth="37.5999755859375" text="Rate" />
                     </columns>
                   </TableView>
                   <Label alignment="CENTER" prefHeight="22.0" prefWidth="222.0" text="Savings">
