@@ -97,6 +97,17 @@ public class Main {
 
         /** Test Deposit/Withdraw */
 //        accHolders.get(0).getAccounts().get(0).deposit(50);
-//        accHolders.get(0).getAccounts().get(0).withdraw(50);
+//        accHolders.get(0).getAccounts().get(0).withdraw(10);
+
+        /** Test Admin's actions */
+        Account account1 = new Savings(1, accHolders.get(2), 100.0);
+        AccHolder accHolder = accHolders.get(2);
+//        admins.get(0).createUserAccount(accHolder, account1);
+//        Account accToDelete = accHolder.getAccounts().get(1);
+//        admins.get(0).closeUserAccount(accHolder, accToDelete);
+        AccHolder accHolderToAdd = new AccHolder(12, "Casiana", "Vulsan", "6132923874839", "CasiV", "8894");
+//        admins.get(0).createUser(accHolderToAdd);
+//        admins.get(0).deleteUser(accHolder);
+//        admins.get(0).makeTransaction(accHolders.get(0).getAccounts().get(0), accHolders.get(1).getAccounts().get(0), 10, "fun");
     }
 }

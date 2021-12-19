@@ -41,7 +41,7 @@ public class AccHolder extends User{
             currentAccRepository.deleteEntity(account);
     }
 
-    public void seeAccountDetails() {
+    public void seeAllAccounts() {
 
     }
 

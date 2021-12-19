@@ -97,13 +97,18 @@ public abstract class Account extends BaseModel implements IRate {
     }
 
     public void withdraw(double amount) {
-        balance = balance - amount;
+        if(balance - amount >= 0) {
+            balance = balance - amount;
 
-        SavingsAccRepository savingsAccRepository = new SavingsAccRepository(); // could also be current
-        savingsAccRepository.updateEntity(this, "balance", this.balance);
+            SavingsAccRepository savingsAccRepository = new SavingsAccRepository(); // could also be current
+            savingsAccRepository.updateEntity(this, "balance", this.balance);
 
-        System.out.println("Withdrawing " + amount);
-        printBalance();
+            System.out.println("Withdrawing " + amount);
+            printBalance();
+
+        } else {
+            System.out.println("Make sure that you have enough money");
+        }
     }
 
     public void transfer(Account receiver, double amount, String description) {
@@ -144,6 +149,10 @@ public abstract class Account extends BaseModel implements IRate {
             }
         }
         return transactionsByCateg;
+    }
+
+    public void seeAccountDetails() {
+
     }
 
     public void printBalance() {
