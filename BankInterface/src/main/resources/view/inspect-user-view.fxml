@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<SplitPane dividerPositions="0.4096989966555184" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+<SplitPane dividerPositions="0.4096989966555184" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.InspectUserController">
   <items>
       <VBox>
          <children>
@@ -75,7 +75,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="58.0">
+                  <Button fx:id="addTransactionButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="58.0">
                      <graphic>
                         <ImageView fitHeight="37.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
                            <image>
