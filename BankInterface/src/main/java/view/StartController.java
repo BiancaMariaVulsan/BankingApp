@@ -13,7 +13,7 @@ import javafx.util.Callback;
 import java.io.IOException;
 
 public class StartController {
-    boolean isAdmin =false;
+    boolean isAdmin =true;
 
     @FXML
     private TextField usernameTextField;
