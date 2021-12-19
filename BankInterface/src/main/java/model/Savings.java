@@ -10,6 +10,11 @@ public class Savings extends Account {
         init();
     }
 
+    public Savings(int id, AccHolder accHolder, double initialDeposit, Category category) {
+        super(id, accHolder, initialDeposit, category);
+        init();
+    }
+
     private void init()
     {
         accNumber = "1" + accNumber;
@@ -22,6 +27,10 @@ public class Savings extends Account {
     }
     @Override
     public double getRate() { return rate; }
+
+    public int getSafetyDepositBoxId() { return safetyDepositBoxId; }
+
+    public int getSafetyDepositBoxKey() { return safetyDepositBoxKey; }
 
     private void setSafetyDepositBox () {
         safetyDepositBoxId = (int)(Math.random() * Math.pow(10,3));

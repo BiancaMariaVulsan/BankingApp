@@ -1,11 +1,13 @@
 package repository;
 
-import model.AccHolder;
-import model.Current;
-import model.Savings;
+import model.*;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 public class CurrentAccRepository extends Repository{
     private ArrayList<Current> currentAccounts = new ArrayList<>();
@@ -22,13 +24,38 @@ public class CurrentAccRepository extends Repository{
             {
                 int id = resultSet.getInt("id_current");
                 int idUser = resultSet.getInt("id_user");
+                int id_category = resultSet.getInt("id_category");
                 double initialDeposit = resultSet.getInt("balance");
                 // select the account holder with "idUser"
-                AccHolder accHolder = selectById(idUser);
-                Current currentAcc = new Current(id, accHolder, initialDeposit);
+                CategoryRepository categoryRepository = new CategoryRepository();
+                Category category = (Category) categoryRepository.selectById(id_category);
+                AccHolderRepository accHolderRepository = new AccHolderRepository();
+                AccHolder accHolder = (AccHolder) accHolderRepository.selectById(idUser);
+                Current currentAcc = new Current(id, accHolder, initialDeposit, category);
                 currentAccounts.add(currentAcc);
             }
             return currentAccounts;
+        } catch (java.sql.SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    protected Current createObject(ResultSet resultSet) {
+        try {
+            if (resultSet.next()) {
+                int id = resultSet.getInt("id_current");
+                int id_category = resultSet.getInt("id_category");
+                double balance = resultSet.getDouble("balance");
+                int id_user = resultSet.getInt("id_user");
+                AccHolderRepository accHolderRepository = new AccHolderRepository();
+                AccHolder accHolder = (AccHolder) accHolderRepository.selectById(id_user);
+                CategoryRepository categoryRepository = new CategoryRepository();
+                Category category = (Category) categoryRepository.selectById(id_category);
+                Current current = new Current(id, accHolder, balance, category);
+                return current;
+            }
         } catch (java.sql.SQLException e) {
             System.out.println(e.getMessage());
         }

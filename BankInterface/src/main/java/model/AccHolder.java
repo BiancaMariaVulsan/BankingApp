@@ -10,16 +10,13 @@ public class AccHolder extends User{
     private final SavingsAccRepository savingsAccRepository = new SavingsAccRepository();
     private final CurrentAccRepository currentAccRepository = new CurrentAccRepository();
 
-    private String cnp;
     private String userName;
     private String password;
 
-    // TODO: inialize the accounts when creating a user without entering inf loop
     private ArrayList<Account> accounts = new ArrayList<>();
 
     public AccHolder(int id, String firstName, String lastName, String cnp, String userName, String password) {
-        super(id, firstName, lastName);
-        this.cnp = cnp;
+        super(id, firstName, lastName, cnp);
         this.userName = userName;
         this.password = password;
     }
@@ -56,11 +53,10 @@ public class AccHolder extends User{
 
     }
 
-    // TODO: if it is not used on other purposes than for testing the program, delete it
-    public ArrayList<Account> getAccounts() { return accounts; }
-
-    public String getCnp() {
-        return cnp;
+    public ArrayList<Account> getAccounts() {
+        accounts = currentAccRepository.selectByUserId(id);
+        accounts.addAll(savingsAccRepository.selectByUserId(id));
+        return accounts;
     }
 
     public String getUserName() {

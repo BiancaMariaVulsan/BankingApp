@@ -1,50 +1,82 @@
 package model;
 
+import repository.SavingsAccRepository;
 import repository.TransactionRepository;
 
+import javax.swing.plaf.synth.SynthOptionPaneUI;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 
 public abstract class Account extends BaseModel implements IRate {
 
     private ArrayList<Transaction> transactions = new ArrayList<>();
     private AccHolder accHolder;
+
     private double balance;
+    private Category category;
 
     protected String accNumber;
     protected double rate;
 
-    static int index = 10000;
+    /**
+     * Constructor used when reading from db
+     */
+    public Account(int id, AccHolder accHolder, double initalDeposit, Category category) {
+        super(id);
+        this.accHolder = accHolder;
+        this.category = category;
+        balance = initalDeposit;
+        init();
+    }
 
+    /**
+     * Constructor used when inserting in db
+     */
     public Account(int id, AccHolder accHolder, double initalDeposit) {
         super(id);
         this.accHolder = accHolder;
+        this.category = new Category(5, "other");
         balance = initalDeposit;
         init();
-        // initialize the list of transactions (read them from db)
-        TransactionRepository transactionRepository = new TransactionRepository();
-        transactions = transactionRepository.selectAllEntities();
     }
 
     private void init()
     {
         // Set the account number
-        index++;
         this.accNumber = setAccountNumber();
         setRate();
     }
 
     public abstract void setRate();
+
     public abstract double getRate();
+
     public double getBalance() { return balance; }
+
     public String getAccNumber() { return accNumber; }
+
     public AccHolder getAccHolder() { return accHolder; }
+
+    public ArrayList<Transaction> getTransactions() {
+        // initialize the list of transactions (read them from db)
+        TransactionRepository transactionRepository = new TransactionRepository();
+        // TODO: select only transactions related to this user
+        transactions = transactionRepository.selectByUserId(id);
+        return transactions;
+    }
+    public Category getCategory() { return category; }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
 
     private String setAccountNumber() {
         String cnp = accHolder.getCnp();
-        String lastTwoCnp = cnp.substring(cnp.length()-2);
-        int uniqueId = index;
-        int randomNumber = (int) (Math.random() * Math.pow(10,3));
-        return lastTwoCnp + uniqueId + randomNumber;
+        char firstName = accHolder.getFirstName().charAt(0);
+        char lastName = accHolder.getLastName().charAt(0);
+        return Character.toString(firstName) + Character.toString(lastName) + cnp;
     }
 
     public void compound() {
@@ -56,27 +88,62 @@ public abstract class Account extends BaseModel implements IRate {
 
     public void deposit(double amount) {
         balance = balance + amount;
+
+        SavingsAccRepository savingsAccRepository = new SavingsAccRepository(); // could also be current
+        savingsAccRepository.updateEntity(this, "balance", this.balance);
+
         System.out.println("Depositing " + amount);
         printBalance();
     }
 
     public void withdraw(double amount) {
         balance = balance - amount;
+
+        SavingsAccRepository savingsAccRepository = new SavingsAccRepository(); // could also be current
+        savingsAccRepository.updateEntity(this, "balance", this.balance);
+
         System.out.println("Withdrawing " + amount);
         printBalance();
     }
 
-    public void transfer(String receiver, double amount, String description) {
-        balance = balance - amount;
+    public void transfer(Account receiver, double amount, String description) {
+        if(this != receiver) {
+            if(amount <= balance) {
+                balance = balance - amount;
+                double receiverBalance = receiver.getBalance();
+                receiver.setBalance(receiverBalance + amount);
+                LocalDate localDate = LocalDate.now();
+                Date date = java.sql.Date.valueOf(localDate);
+                Transaction transaction = new Transaction(transactions.size()+1, this, receiver, amount, date);
+                transaction.setDescription(description);
+                transactions.add(transaction);
+                // add in db
+                TransactionRepository transactionRepository = new TransactionRepository();
+                transactionRepository.insertEntity(transaction);
+                SavingsAccRepository savingsAccRepository = new SavingsAccRepository(); // could also be current
+                savingsAccRepository.updateEntity(this, "balance", this.balance);
+                savingsAccRepository.updateEntity(receiver, "balance", receiver.getBalance());
 
-        Transaction transaction = new Transaction(transactions.size()+1); // TODO: check if the id ok
-        transaction.setValue(amount);
-        transaction.setReceiver(receiver);
-        transaction.setDescription(description);
-        transactions.add(transaction);
+                System.out.println("Transfer " + amount + " to " + receiver);
+                printBalance();
+            } else {
+                //TODO: USE A LOGGER
+                System.out.println("Please make sure that you have enough money");
+            }
+        } else {
+            //TODO: USE A LOGGER
+            System.out.println("Please choose a different receiver!");
+        }
+    }
 
-        System.out.println("Transfer " + amount + " to " + receiver);
-        printBalance();
+    public ArrayList<Transaction> getTransactionsByCategory(Category category) {
+        ArrayList<Transaction> transactionsByCateg = new ArrayList<>();
+        for (Transaction transaction : transactions) {
+            if(transaction.getCategory() == category) {
+                transactionsByCateg.add(transaction);
+            }
+        }
+        return transactionsByCateg;
     }
 
     public void printBalance() {

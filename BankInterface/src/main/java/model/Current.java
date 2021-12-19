@@ -10,6 +10,11 @@ public class Current extends Account {
         init();
     }
 
+    public Current(int id, AccHolder accHolder, double initialDeposit, Category category) {
+        super(id, accHolder, initialDeposit, category);
+        init();
+    }
+
     private void init()
     {
         accNumber = "2" + accNumber;
@@ -17,7 +22,7 @@ public class Current extends Account {
     }
 
     /**
-     * / the rate for the current account is 15% from the base rate
+     *  the rate for the current account is 15% from the base rate
      */
     @Override
     public void setRate() {
@@ -25,6 +30,10 @@ public class Current extends Account {
     }
     @Override
     public double getRate() { return rate; }
+
+    public int getDebitCardNr() { return debitCardNr; }
+
+    public int getDebitCardPIN() { return debitCardPIN; }
 
     private void setDebitCard () {
         debitCardNr = (int)(Math.random() * Math.pow(10,12));

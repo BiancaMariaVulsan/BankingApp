@@ -6,8 +6,8 @@ import java.sql.Date;
 public class Admin extends User {
 
     Date date; // TODO: admin => birthdate > 18
-    public Admin(int id, String firstName, String lastName, Date date) {
-        super(id, firstName, lastName);
+    public Admin(int id, String firstName, String lastName, Date date, String cnp) {
+        super(id, firstName, lastName, cnp);
         this.date = date;
     }
 
