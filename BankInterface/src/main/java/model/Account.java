@@ -62,7 +62,6 @@ public abstract class Account extends BaseModel implements IRate {
     public ArrayList<Transaction> getTransactions() {
         // initialize the list of transactions (read them from db)
         TransactionRepository transactionRepository = new TransactionRepository();
-        // TODO: select only transactions related to this user
         transactions = transactionRepository.selectByUserId(id);
         return transactions;
     }
@@ -112,6 +111,12 @@ public abstract class Account extends BaseModel implements IRate {
     }
 
     public void transfer(Account receiver, double amount, String description) {
+        if(this instanceof Savings) {
+            if(this.getTransactions().size() >= 6) {
+                System.out.println("This is a savings account! You cannot make more than 6 transactions on it!");
+                return;
+            }
+        }
         if(this != receiver) {
             if(amount <= balance) {
                 balance = balance - amount;
@@ -149,10 +154,6 @@ public abstract class Account extends BaseModel implements IRate {
             }
         }
         return transactionsByCateg;
-    }
-
-    public void seeAccountDetails() {
-
     }
 
     public void printBalance() {

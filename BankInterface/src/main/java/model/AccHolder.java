@@ -41,10 +41,6 @@ public class AccHolder extends User{
             currentAccRepository.deleteEntity(account);
     }
 
-    public void seeAllAccounts() {
-
-    }
-
     public void changeUserName() {
 
     }

@@ -88,8 +88,8 @@ public class Main {
         }
 
         /** Test Transaction */
-        // accHolders.get(0).getAccounts().get(0).transfer(accHolders.get(0).getAccounts().get(1), 20.0, "christmas gift");
-//        accHolders.get(1).getAccounts().get(0).transfer(accHolders.get(0).getAccounts().get(0), 1.0, "pizza");
+//         accHolders.get(0).getAccounts().get(0).transfer(accHolders.get(0).getAccounts().get(1), 2.0, "christmas gift");
+        accHolders.get(1).getAccounts().get(0).transfer(accHolders.get(0).getAccounts().get(0), 3.0, "dinner");
 //        ArrayList<Transaction> transactions = accHolders.get(0).getAccounts().get(0).getTransactions();
 //        for(Transaction transaction : transactions) {
 //            System.out.println(transaction.id);
@@ -101,7 +101,7 @@ public class Main {
 
         /** Test Admin's actions */
         Account account1 = new Savings(1, accHolders.get(2), 100.0);
-        AccHolder accHolder = accHolders.get(2);
+//        AccHolder accHolder = accHolders.get(2);
 //        admins.get(0).createUserAccount(accHolder, account1);
 //        Account accToDelete = accHolder.getAccounts().get(1);
 //        admins.get(0).closeUserAccount(accHolder, accToDelete);
