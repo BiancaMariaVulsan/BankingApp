@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/Banking.iml" filepath="$PROJECT_DIR$/.idea/Banking.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/BankInterface/Banking.iml" filepath="$PROJECT_DIR$/BankInterface/Banking.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/BankingApp.iml" filepath="$PROJECT_DIR$/.idea/BankingApp.iml" />
+>>>>>>> origin/Anca
     </modules>
   </component>
 </project>

@@ -1,18 +1,24 @@
 package view;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.InputMethodEvent;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class RegisterController implements Initializable {
+    @FXML
+    private ProgressIndicator progressIndicator;
     @FXML
     private CheckBox termsCheckBox;
     @FXML
@@ -33,6 +39,32 @@ public class RegisterController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         registerButton.setDisable(true);
+        ArrayList<TextField> textFields = new ArrayList<>();
+        textFields.add(CNPTextField);
+        textFields.add(firstNameTextField);
+        textFields.add(lastNameTextField);
+        textFields.add(usernameTextField);
+        textFields.add(passwordTextField);
+
+        for (TextField textField : textFields) {
+            textField.textProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                                    String oldValue, String newValue) {
+
+                    int numberOfNonEmpty  = 0;
+                    System.out.println("Action");
+                    for (TextField textField1 : textFields)
+                        if (!textField1.getText().isEmpty())
+                        {
+                            numberOfNonEmpty++;
+                        }
+                    System.out.println(numberOfNonEmpty);
+                    progressIndicator.setProgress((double) numberOfNonEmpty/5);
+                }
+            });
+
+        }
         exitButton.setOnAction(new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {

@@ -13,7 +13,7 @@ import javafx.util.Callback;
 import java.io.IOException;
 
 public class StartController {
-    boolean isAdmin =false;
+    boolean isAdmin =true;
 
     @FXML
     private TextField usernameTextField;
@@ -50,6 +50,8 @@ public class StartController {
                     fxmlLoader.setLocation(getClass().getResource("register-view.fxml"));
                     programRoot = fxmlLoader.load();
                     Scene programScene = new Scene(programRoot);
+                    String css = this.getClass().getResource("start.css").toExternalForm();
+                    programScene.getStylesheets().add(css);
                     programStage.setTitle("Running Program");
                     programStage.setScene(programScene);
                     programStage.show();
@@ -85,6 +87,8 @@ public class StartController {
                         fxmlLoader.setLocation(getClass().getResource("admin-view.fxml"));
                         programRoot = fxmlLoader.load();
                         Scene programScene = new Scene(programRoot);
+                        String css = this.getClass().getResource("start.css").toExternalForm();
+                        programScene.getStylesheets().add(css);
                         programStage.setTitle("Admin");
                         programStage.setScene(programScene);
                         programStage.show();
@@ -114,6 +118,8 @@ public class StartController {
                         fxmlLoader.setLocation(getClass().getResource("user-view.fxml"));
                         programRoot = fxmlLoader.load();
                         Scene programScene = new Scene(programRoot);
+                        String css = this.getClass().getResource("start.css").toExternalForm();
+                        programScene.getStylesheets().add(css);
                         programStage.setTitle("User");
                         programStage.setScene(programScene);
                         programStage.show();
