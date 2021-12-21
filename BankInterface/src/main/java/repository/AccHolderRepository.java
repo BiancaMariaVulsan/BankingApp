@@ -1,6 +1,8 @@
 package repository;
 
 import model.AccHolder;
+import model.Account;
+import model.Transaction;
 import model.User;
 
 import java.sql.Connection;
@@ -8,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 public class AccHolderRepository extends Repository {
 
@@ -55,5 +58,47 @@ public class AccHolderRepository extends Repository {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+
+    /**
+     * Method used for registration and sign in
+     * @param username the userame provied by the user
+     * @param password user's password
+     * @return true if the user already exists in the database, false otherwise
+     */
+    public boolean checkIfUserExists(String username, String password) {
+        String  query = "SELECT COUNT(*) AS counter FROM accholder WHERE user_name = \'" + username + "\' "
+                    + "passowrd = \'" + password + "\'";
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DbConnection.getConnection();
+            statement = connection.prepareStatement(query);
+            resultSet = statement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        int count = 0;
+        try {
+            if(resultSet.next()){
+                count = resultSet.getInt("counter");
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally{
+            DbConnection.close(resultSet);
+            DbConnection.close(statement);
+            DbConnection.close(connection);
+        }
+
+        if(count != 0){
+            return true;
+        }
+        return false;
     }
 }

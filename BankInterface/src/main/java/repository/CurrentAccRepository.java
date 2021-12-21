@@ -61,4 +61,27 @@ public class CurrentAccRepository extends Repository{
         }
         return null;
     }
+
+    public Current selectByAccountNr(String accNumber) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        String query = "SELECT * FROM ";
+        query = query + "account WHERE account_nr = " + accNumber;
+
+        try {
+            connection = DbConnection.getConnection();
+            statement = connection.prepareStatement(query);
+            resultSet = statement.executeQuery();
+
+            return createObject(resultSet);
+        }catch(SQLException e) {
+            LOGGER.log(Level.WARNING, "currentacc Repository:selectByAccountNr " + e.getMessage());
+            return null;
+        }finally{
+            DbConnection.close(resultSet);
+            DbConnection.close(statement);
+            DbConnection.close(connection);
+        }
+    }
 }

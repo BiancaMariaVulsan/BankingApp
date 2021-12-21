@@ -26,7 +26,7 @@ public class Controller {
 
     public boolean checkUserExists(String username, String password){
         // todo check by username and password
-        return false;
+        return accHolderRepository.checkIfUserExists(username, password);
     }
 
     public void addAccountHolder(String firstName, String lastName, String CNP, String username, String password){
@@ -48,9 +48,14 @@ public class Controller {
         Current current = new Current(1,accHolder,initialDeposit);
         accHolder.createAccount(current);
     }
-    public void addTransaction(Account account, String reciever){
-        // todo select by account number
+    public void addTransaction(Account senderAcc, String reciever, double value, String descriprion){
+        // todo select by accNr
+        Account receiverAcc = savingsAccRepository.selectByAccountNr(reciever);
+        if(receiverAcc == null) {
+            receiverAcc = currentAccRepository.selectByAccountNr(reciever);
+        }
         // add transaction to repo
+        senderAcc.transfer(receiverAcc, value, descriprion);
     }
 
     public ArrayList<Account> getAccountsByUser(AccHolder accHolder){

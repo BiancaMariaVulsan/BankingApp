@@ -54,6 +54,7 @@ public class AccHolder extends User{
         accounts.addAll(savingsAccRepository.selectByUserId(id));
         return accounts;
     }
+    //todo: getter separat
 
     public String getUserName() {
         return userName;
