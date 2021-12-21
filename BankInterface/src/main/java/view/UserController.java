@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import model.AccHolder;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,6 +24,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class UserController implements Initializable {
+    AccHolder accHolder;
     @FXML
     private PieChart transactionsChart;
     @FXML

@@ -24,7 +24,7 @@
                   <Font size="13.0" />
                </font>
             </Label>
-            <ChoiceBox prefHeight="17.0" prefWidth="150.0" />
+            <ChoiceBox fx:id="accountTypesChoiceBox" prefHeight="17.0" prefWidth="150.0" />
          </children>
       </HBox>
       <HBox prefHeight="75.0" prefWidth="462.0">

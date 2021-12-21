@@ -17,6 +17,8 @@ public class StatisticsContent implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         transactionsChart.setTitle("Transactions");
+        // get all categories
+        // get the number of transactions of this user for each category
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList(
                         new PieChart.Data("Food", 13),

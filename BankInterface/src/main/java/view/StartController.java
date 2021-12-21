@@ -26,6 +26,9 @@ public class StartController {
 
     @FXML
     public void initialize(){
+        // get from text fields username and password
+        // if root and admin password -> isAdmin - true
+        // else : isAdmin->false + lookup if user exists
         registerButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle (ActionEvent e) {
