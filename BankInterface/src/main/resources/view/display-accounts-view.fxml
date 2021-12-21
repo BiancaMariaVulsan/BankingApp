@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="317.0" prefWidth="490.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="317.0" prefWidth="490.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.DisplayAccountsContent">
    <children>
       <Label alignment="CENTER" prefHeight="35.0" prefWidth="492.0" text="Current Accounts">
          <font>
@@ -15,12 +15,12 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="281.0" prefWidth="270.0">
                <children>
-                  <TableView layoutY="23.0" prefHeight="258.0" prefWidth="257.0">
+                  <TableView fx:id="currentTableView" layoutY="23.0" prefHeight="258.0" prefWidth="257.0">
                     <columns>
-                      <TableColumn prefWidth="78.2000076174736" text="Acc. Number" />
-                      <TableColumn prefWidth="81.79999542236328" text="Card Number" />
-                        <TableColumn minWidth="0.0" prefWidth="55.0" text="Balance" />
-                        <TableColumn minWidth="4.4000244140625" prefWidth="35.20001220703125" text="Rate" />
+                      <TableColumn fx:id="accNumberCurrentColumn" prefWidth="78.2000076174736" text="Acc. Number" />
+                      <TableColumn fx:id="cardNumberCurrentColumn" prefWidth="81.79999542236328" text="Card Number" />
+                        <TableColumn fx:id="balanceCurrentColumn" minWidth="0.0" prefWidth="55.0" text="Balance" />
+                        <TableColumn fx:id="rateCurrentColumn" minWidth="4.4000244140625" prefWidth="35.20001220703125" text="Rate" />
                     </columns>
                   </TableView>
                   <Label alignment="CENTER" prefHeight="22.0" prefWidth="250.0" text="Regular ">
@@ -31,12 +31,12 @@
                </children></AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <TableView layoutY="23.0" prefHeight="258.0" prefWidth="230.0">
+                  <TableView fx:id="savingsTableView" layoutY="23.0" prefHeight="258.0" prefWidth="230.0">
                     <columns>
-                      <TableColumn prefWidth="62.99999922513962" text="Acc. Num." />
-                        <TableColumn minWidth="0.0" prefWidth="83.40002822875977" text="DepositBox Id" />
-                      <TableColumn prefWidth="49.0" text="Balance" />
-                        <TableColumn prefWidth="37.5999755859375" text="Rate" />
+                      <TableColumn fx:id="accNumberSavingsColumn" prefWidth="62.99999922513962" text="Acc. Num." />
+                        <TableColumn fx:id="cardNumberSavingsColumn" minWidth="0.0" prefWidth="83.40002822875977" text="DepositBox Id" />
+                      <TableColumn fx:id="balanceSavingsColumn" prefWidth="49.0" text="Balance" />
+                        <TableColumn fx:id="rateSavingsColumn" prefWidth="37.5999755859375" text="Rate" />
                     </columns>
                   </TableView>
                   <Label alignment="CENTER" prefHeight="22.0" prefWidth="222.0" text="Savings">

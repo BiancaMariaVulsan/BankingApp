@@ -1,5 +1,6 @@
 package view;
 
+import controller.Controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -27,6 +28,11 @@ public class AdminController implements Initializable {
     private Button addUserButton;
     @FXML
     private TableView usersTableView;
+    Controller controller;
+
+    public AdminController(Controller controller) {
+        this.controller = controller;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

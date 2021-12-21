@@ -1,5 +1,6 @@
 package view;
 
+import controller.Controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,7 +15,7 @@ import java.io.IOException;
 
 public class StartController {
     boolean isAdmin =true;
-
+    Controller controller;
     @FXML
     private TextField usernameTextField;
     @FXML
@@ -23,6 +24,11 @@ public class StartController {
     private Button signInButton;
     @FXML
     private Button registerButton;
+
+
+    public void setUp(){
+
+    }
 
     @FXML
     public void initialize(){
@@ -37,7 +43,7 @@ public class StartController {
 
                 Callback<Class<?>, Object> controllerFactory = type -> {
                     if (type == RegisterController.class) {
-                        return new RegisterController();
+                        return new RegisterController(controller);
                     } else {
                         try {
                             return type.newInstance() ;
@@ -67,14 +73,42 @@ public class StartController {
         signInButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                // todo check if both fields are completed and if user exists
+                if (usernameTextField.getText().isEmpty() || passwordTextField.getText().isEmpty())
+                {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Program finished");
+                    alert.setContentText("You must complete both username and password fields !");
+                    Button confirm = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+                    confirm.setDefaultButton(false);
+                    confirm.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
+                    alert.showAndWait();
+                    return;
+
+                }
+                if (usernameTextField.getText().equals("root") || passwordTextField.getText().equals("admin"))
+                    isAdmin = true;
+                else {
+                    if (controller.checkUserExists(usernameTextField.getText(),passwordTextField.getText())){
+                        isAdmin = false;
+                    }
+                    else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Program finished");
+                        alert.setContentText("There is no user with this username and password !");
+                        Button confirm = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+                        confirm.setDefaultButton(false);
+                        confirm.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
+                        alert.showAndWait();
+                        return;
+                    }
+                }
                 if (isAdmin){
                     Stage programStage = new Stage();
                     Parent programRoot;
 
                     Callback<Class<?>, Object> controllerFactory = type -> {
                         if (type ==AdminController.class) {
-                            return new AdminController();
+                            return new AdminController(controller);
                         } else {
                             try {
                                 return type.newInstance() ;
@@ -102,10 +136,10 @@ public class StartController {
                 else {
                     Stage programStage = new Stage();
                     Parent programRoot;
-
+                    // todo call getter account holder by username
                     Callback<Class<?>, Object> controllerFactory = type -> {
                         if (type == UserController.class) {
-                            return new UserController();
+                            return new UserController(controller);
                         } else {
                             try {
                                 return type.newInstance() ;

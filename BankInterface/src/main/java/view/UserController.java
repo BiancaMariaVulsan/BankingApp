@@ -1,5 +1,6 @@
 package view;
 
+import controller.Controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,6 +26,7 @@ import java.util.ResourceBundle;
 
 public class UserController implements Initializable {
     AccHolder accHolder;
+    Controller controller;
     @FXML
     private PieChart transactionsChart;
     @FXML
@@ -62,6 +64,15 @@ public class UserController implements Initializable {
 
     }
 
+    public UserController(Controller controller) {
+        this.controller = controller;
+    }
+
+    public UserController(AccHolder accHolder, Controller controller) {
+        this.accHolder = accHolder;
+        this.controller = controller;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         displayStatisticsButton.setDisable(true);
@@ -80,10 +91,10 @@ public class UserController implements Initializable {
                 for (Button button1: buttons)
                     if (button1 != button)
                         button1.setDisable(false);
-                AddAccountContent addAccountContent = new AddAccountContent();
+                AddAccountContent addAccountContent = new AddAccountContent(controller);
                 Callback<Class<?>, Object> controllerFactory = type -> {
                     if (type == AddAccountContent.class) {
-                        return new AddAccountContent();
+                        return new AddAccountContent(controller);
                     } else {
                         try {
                             return type.newInstance() ;
@@ -114,10 +125,10 @@ public class UserController implements Initializable {
                 for (Button button1: buttons)
                     if (button1 != button)
                         button1.setDisable(false);
-                StatisticsContent statisticsContent = new StatisticsContent();
+                StatisticsContent statisticsContent = new StatisticsContent(controller);
                 Callback<Class<?>, Object> controllerFactory = type -> {
                     if (type == StatisticsContent.class) {
-                        return new StatisticsContent();
+                        return new StatisticsContent(controller);
                     } else {
                         try {
                             return type.newInstance() ;
@@ -148,10 +159,10 @@ public class UserController implements Initializable {
                 for (Button button1: buttons)
                     if (button1 != button)
                         button1.setDisable(false);
-                DisplayAccountsContent displayAccountsContent = new DisplayAccountsContent();
+                DisplayAccountsContent displayAccountsContent = new DisplayAccountsContent(controller);
                 Callback<Class<?>, Object> controllerFactory = type -> {
                     if (type == DisplayAccountsContent.class) {
-                        return new DisplayAccountsContent();
+                        return new DisplayAccountsContent(controller);
                     } else {
                         try {
                             return type.newInstance() ;
@@ -182,10 +193,10 @@ public class UserController implements Initializable {
                 for (Button button1: buttons)
                     if (button1 != button)
                         button1.setDisable(false);
-                AddTransactionContent addTransactionContent = new AddTransactionContent();
+                AddTransactionContent addTransactionContent = new AddTransactionContent(controller);
                 Callback<Class<?>, Object> controllerFactory = type -> {
                     if (type == AddTransactionContent.class) {
-                        return new AddTransactionContent();
+                        return new AddTransactionContent(controller);
                     } else {
                         try {
                             return type.newInstance() ;
@@ -216,10 +227,10 @@ public class UserController implements Initializable {
                 for (Button button1: buttons)
                     if (button1 != button)
                         button1.setDisable(false);
-                DisplayTransactionsContent displayTransactionsContent = new DisplayTransactionsContent();
+                DisplayTransactionsContent displayTransactionsContent = new DisplayTransactionsContent(controller);
                 Callback<Class<?>, Object> controllerFactory = type -> {
                     if (type == DisplayTransactionsContent.class) {
-                        return new DisplayTransactionsContent();
+                        return new DisplayTransactionsContent(controller);
                     } else {
                         try {
                             return type.newInstance() ;

@@ -31,7 +31,7 @@ public class Controller {
 
     public void addAccountHolder(String firstName, String lastName, String CNP, String username, String password){
         AccHolder accHolder = new AccHolder(1,firstName,lastName,CNP,username,password);
-        if (!accHolderRepository.checkIfObjectAlreadyExists(accHolder))
+        if (!accHolderRepository.checkIfUserExists(username,password))
             accHolderRepository.insertEntity(accHolder);
         else
             throw new RuntimeException("There is already an account holder with this username");

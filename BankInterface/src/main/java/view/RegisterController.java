@@ -1,5 +1,6 @@
 package view;
 
+import controller.Controller;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -35,6 +36,11 @@ public class RegisterController implements Initializable {
     private Button exitButton;
     @FXML
     private Button registerButton;
+    Controller controller;
+
+    public RegisterController(Controller controller) {
+        this.controller = controller;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -97,6 +103,18 @@ public class RegisterController implements Initializable {
     registerButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                try{
+                    controller.addAccountHolder(firstNameTextField.getText(),lastNameTextField.getText(),CNPTextField.getText(),usernameTextField.getText(),passwordTextField.getText());
+                }catch (RuntimeException exception){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setContentText(exception.getMessage());
+                    Button confirm = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+                    confirm.setDefaultButton(false);
+                    confirm.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
+                    alert.showAndWait();
+                }
+
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Successful registration");
                 alert.setContentText("You are successfully registered!");

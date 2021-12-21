@@ -1,5 +1,6 @@
 package view;
 
+import controller.Controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -11,13 +12,19 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import java.io.Console;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class InspectUserController implements Initializable {
+    Controller controller;
     @FXML
     private Button addTransactionButton;
+
+    public InspectUserController(Controller controller) {
+        this.controller = controller;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -29,7 +36,7 @@ public class InspectUserController implements Initializable {
 
                 Callback<Class<?>, Object> controllerFactory = type -> {
                     if (type == AddUserTransactionController.class) {
-                        return new AddUserTransactionController();
+                        return new AddUserTransactionController(controller);
                     } else {
                         try {
                             return type.newInstance() ;
