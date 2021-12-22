@@ -49,6 +49,11 @@ public class DisplayAccountsContent implements Initializable {
         this.controller = controller;
     }
 
+    public DisplayAccountsContent(AccHolder accHolder, Controller controller) {
+        this.accHolder = accHolder;
+        this.controller = controller;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setCurrentTable();

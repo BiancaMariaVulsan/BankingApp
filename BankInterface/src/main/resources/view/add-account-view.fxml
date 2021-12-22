@@ -34,7 +34,7 @@
                   <Font size="13.0" />
                </font>
             </Label>
-            <TextField prefHeight="35.0" prefWidth="152.0" />
+            <TextField fx:id="initialDepositTextField" prefHeight="35.0" prefWidth="152.0" />
             <Label alignment="CENTER" prefHeight="34.0" prefWidth="24.0" text="\$">
                <font>
                   <Font size="14.0" />
@@ -46,12 +46,13 @@
       <HBox prefHeight="68.0" prefWidth="462.0">
          <children>
             <Pane prefHeight="0.0" prefWidth="200.0" />
-            <Label prefHeight="59.0" prefWidth="154.0" text="I agree to Privacy Policy :" />
-            <ToggleButton minWidth="53.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="58.0">
+            <CheckBox fx:id="termsCheckBox" mnemonicParsing="false">
                <HBox.margin>
-                  <Insets right="10.0" />
-               </HBox.margin></ToggleButton>
-          <Button minWidth="60.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="60.0">
+                  <Insets right="10.0" top="20.0" />
+               </HBox.margin>
+            </CheckBox>
+            <Label prefHeight="59.0" prefWidth="154.0" text="I agree to Privacy Policy " />
+          <Button fx:id="addButton" minWidth="60.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="60.0">
                <graphic>
                   <ImageView fitHeight="53.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
                      <image>

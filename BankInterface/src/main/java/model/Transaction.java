@@ -43,6 +43,10 @@ public class Transaction extends BaseModel {
         this.description = description;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public double getValue() { return value; }
     public Account getSender() { return sender; }
     public Category getCategory() { return category; }

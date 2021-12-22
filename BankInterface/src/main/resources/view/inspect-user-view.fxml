@@ -21,7 +21,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" />
+                  <ChoiceBox fx:id="accountChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" />
                   <Label alignment="CENTER" prefHeight="29.0" prefWidth="122.0" text="Account :">
                      <font>
                         <Font size="14.0" />
@@ -29,8 +29,8 @@
                   </Label>
                   <Label alignment="CENTER" prefHeight="28.0" prefWidth="116.0" text="Account Type :" GridPane.rowIndex="1" />
                   <Label alignment="CENTER" prefHeight="32.0" prefWidth="116.0" text="Initial Deposit :" GridPane.rowIndex="2" />
-                  <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Spinner GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <ChoiceBox fx:id="accountTypeChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Spinner fx:id="initialDepositSpinner" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
                <VBox.margin>
                   <Insets right="10.0" />
@@ -38,7 +38,7 @@
             </GridPane>
             <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0">
               <items>
-                  <Button mnemonicParsing="false" prefHeight="49.0" prefWidth="52.0">
+                  <Button fx:id="removeButton" mnemonicParsing="false" prefHeight="49.0" prefWidth="52.0">
                      <graphic>
                         <ImageView fitHeight="33.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -46,7 +46,7 @@
                            </image>
                         </ImageView>
                      </graphic></Button>
-                  <Button mnemonicParsing="false" prefHeight="49.0" prefWidth="52.0">
+                  <Button fx:id="addButton" mnemonicParsing="false" prefHeight="49.0" prefWidth="52.0">
                      <graphic>
                         <ImageView fitHeight="34.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -55,10 +55,6 @@
                         </ImageView>
                      </graphic></Button>
                   <Separator orientation="VERTICAL" prefHeight="17.0" prefWidth="23.0" />
-                <Button mnemonicParsing="false" text="Remove User" textFill="#da1515">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font></Button>
               </items>
                <VBox.margin>
                   <Insets />
@@ -85,12 +81,12 @@
                      </graphic></Button>
                </children>
             </HBox>
-            <TableView prefHeight="398.0" prefWidth="358.0">
+            <TableView fx:id="transactionsTableView" prefHeight="398.0" prefWidth="358.0">
               <columns>
-                <TableColumn prefWidth="116.60001826286316" text="Reciever" />
-                <TableColumn prefWidth="78.5999755859375" text="Category" />
-                  <TableColumn prefWidth="59.79998779296875" text="Value" />
-                  <TableColumn prefWidth="101.00001525878906" text="Date" />
+                <TableColumn fx:id="recieverColumn" prefWidth="116.60001826286316" text="Reciever" />
+                <TableColumn fx:id="categoryColumn" prefWidth="78.5999755859375" text="Category" />
+                  <TableColumn fx:id="valueColumn" prefWidth="59.79998779296875" text="Value" />
+                  <TableColumn fx:id="dateColumn" prefWidth="101.00001525878906" text="Date" />
               </columns>
             </TableView>
          </children>

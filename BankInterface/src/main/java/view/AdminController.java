@@ -1,6 +1,9 @@
 package view;
 
 import controller.Controller;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -8,13 +11,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import model.AccHolder;
+import model.Account;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,11 +25,33 @@ import java.util.ResourceBundle;
 
 public class AdminController implements Initializable {
     @FXML
+    private Button removeUserButton;
+    @FXML
+    private TableColumn<AccHolder,String> usernameColumn;
+    @FXML
+    private TableColumn<AccHolder,String> firstNameColumn;
+    @FXML
+    private TableColumn<AccHolder,String> lastNameColumn;
+    @FXML
+    private TableColumn<AccHolder,String> CNPColumn;
+    @FXML
+    private TextField firstNameTextField;
+    @FXML
+    private TextField lastNameTextField;
+    @FXML
+    private TextField CNPTextField;
+    @FXML
+    private TextField usernameTextField;
+    @FXML
+    private TextField passwordTextField;
+    @FXML
     private Button exitButton;
     @FXML
     private Button addUserButton;
     @FXML
-    private TableView usersTableView;
+    private TableView<AccHolder> usersTableView;
+    private ObservableList<AccHolder> usersItems = FXCollections.observableArrayList();
+
     Controller controller;
 
     public AdminController(Controller controller) {
@@ -55,8 +79,37 @@ public class AdminController implements Initializable {
         addUserButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                //todo add user to list of users
-                populateTableUsers();
+                try {
+                    controller.addAccountHolder(firstNameTextField.getText(),lastNameTextField.getText(),CNPTextField.getText(),usernameTextField.getText(),passwordTextField.getText());
+                    populateTableUsers();
+                }catch (RuntimeException exception){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setContentText(exception.getMessage());
+                    Button confirm = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+                    confirm.setDefaultButton(false);
+                    confirm.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
+                    alert.showAndWait();
+                }
+
+            }
+        });
+        removeUserButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                try {
+                    AccHolder accHolder = usersTableView.getSelectionModel().getSelectedItem();
+                    controller.removeAccountHolder(accHolder);
+                    populateTableUsers();
+                }catch (RuntimeException exception){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setContentText(exception.getMessage());
+                    Button confirm = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+                    confirm.setDefaultButton(false);
+                    confirm.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
+                    alert.showAndWait();
+                }
             }
         });
         usersTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -67,7 +120,7 @@ public class AdminController implements Initializable {
 
                 Callback<Class<?>, Object> controllerFactory = type -> {
                     if (type == InspectUserController.class) {
-                        return new InspectUserController();
+                        return new InspectUserController(controller);
                     } else {
                         try {
                             return type.newInstance() ;
@@ -96,5 +149,12 @@ public class AdminController implements Initializable {
     }
 
     public void populateTableUsers(){
+        usersItems.clear();
+        firstNameColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getFirstName()));
+        lastNameColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getLastName()));
+        CNPColumn.setCellValueFactory(cellData->new ReadOnlyStringWrapper(String.valueOf(cellData.getValue().getCnp())));
+        usernameColumn.setCellValueFactory(cellData->new ReadOnlyStringWrapper(String.valueOf(cellData.getValue().getUserName())));
+        usersItems.addAll(controller.getAllAccountHolders());
+        usersTableView.setItems(usersItems);
     }
 }

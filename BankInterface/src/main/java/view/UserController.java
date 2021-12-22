@@ -59,11 +59,6 @@ public class UserController implements Initializable {
 
     private ArrayList<Button> buttons;
 
-    @FXML
-    public void onButtonClickedAddAccount(){
-
-    }
-
     public UserController(Controller controller) {
         this.controller = controller;
     }

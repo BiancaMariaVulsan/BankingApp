@@ -24,6 +24,11 @@ public class StatisticsContent implements Initializable {
         this.controller = controller;
     }
 
+    public StatisticsContent(AccHolder accHolder, Controller controller) {
+        this.accHolder = accHolder;
+        this.controller = controller;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         transactionsChart.setTitle("Transactions");

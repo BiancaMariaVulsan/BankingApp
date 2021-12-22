@@ -93,7 +93,7 @@ public class StartController {
                     }
                     else {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Program finished");
+                        alert.setTitle("Error");
                         alert.setContentText("There is no user with this username and password !");
                         Button confirm = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
                         confirm.setDefaultButton(false);

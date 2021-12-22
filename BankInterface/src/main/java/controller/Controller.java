@@ -54,6 +54,8 @@ public class Controller {
         if(receiverAcc == null) {
             receiverAcc = currentAccRepository.selectByAccountNr(reciever);
         }
+        if (receiverAcc == null)
+            throw new RuntimeException("There is no reciever with this account number");
         // add transaction to repo
         senderAcc.transfer(receiverAcc, value, descriprion);
     }
@@ -90,6 +92,10 @@ public class Controller {
         return transactions;
     }
 
+    public ArrayList<Transaction> getTransactionsByAccount(Account account){
+        return account.getTransactions();
+    }
+
     public ArrayList<Category> getAllCategoriesName(){
         ArrayList<Category> categories = categoryRepository.selectAllEntities();
         return categories;
@@ -105,6 +111,13 @@ public class Controller {
         return totalCount;
     }
 
+    public void makeDeposit(Account account,double amount){
+        account.deposit(amount);
+    }
+    public void makeWithdrawal(Account account,double amount){
+        account.withdraw(amount);
+    }
+
     public ArrayList<AccHolder> getAllAccountHolders(){
         return accHolderRepository.selectAllEntities();
     }
@@ -113,7 +126,7 @@ public class Controller {
         accHolderRepository.deleteEntity(accHolder);
     }
 
-    public void removeSavingsByAccountHolder(AccHolder accHolder, Account account){
+    public void removeAccountByAccountHolder(AccHolder accHolder, Account account){
         accHolder.closeAccount(account);
     }
 
