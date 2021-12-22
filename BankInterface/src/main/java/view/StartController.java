@@ -31,20 +31,26 @@ public class StartController {
     private Button signInButton;
     @FXML
     private Button registerButton;
-
+    SavingsAccRepository savingsAccRepository;
+    CurrentAccRepository currentAccRepository;
+    AdminRepository adminRepository;
+    AccHolderRepository userRepository;
 
     public void setUp(){
         SavingsAccRepository savingsAccRepository = new SavingsAccRepository();
         CurrentAccRepository currentAccRepository = new CurrentAccRepository();
         AdminRepository adminRepository = new AdminRepository();
         AccHolderRepository userRepository = new AccHolderRepository();
+        this.savingsAccRepository = savingsAccRepository;
+        this.currentAccRepository = currentAccRepository;
+        this.adminRepository = adminRepository;
+        this.userRepository = userRepository;
+
     }
 
     @FXML
     public void initialize(){
-        // get from text fields username and password
-        // if root and admin password -> isAdmin - true
-        // else : isAdmin->false + lookup if user exists
+        setUp();
         registerButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle (ActionEvent e) {
@@ -146,10 +152,10 @@ public class StartController {
                 else {
                     Stage programStage = new Stage();
                     Parent programRoot;
-                    // todo call getter account holder by username
+                    AccHolder accHolder = controller.getAccHolderByUsername(usernameTextField.getText());
                     Callback<Class<?>, Object> controllerFactory = type -> {
                         if (type == UserController.class) {
-                            return new UserController(controller);
+                            return new UserController(accHolder,controller);
                         } else {
                             try {
                                 return type.newInstance() ;

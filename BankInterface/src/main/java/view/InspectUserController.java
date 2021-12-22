@@ -50,10 +50,6 @@ public class InspectUserController implements Initializable {
     private Button addTransactionButton;
     AccHolder accHolder;
 
-    public InspectUserController(Controller controller) {
-        this.controller = controller;
-    }
-
     public InspectUserController(AccHolder accHolder,Controller controller) {
         this.controller = controller;
         this.accHolder = accHolder;
@@ -111,7 +107,7 @@ public class InspectUserController implements Initializable {
 
                 Callback<Class<?>, Object> controllerFactory = type -> {
                     if (type == AddUserTransactionController.class) {
-                        return new AddUserTransactionController(controller);
+                        return new AddUserTransactionController(controller,accHolder,accountChoiceBox.getValue());
                     } else {
                         try {
                             return type.newInstance() ;

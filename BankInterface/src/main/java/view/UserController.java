@@ -59,10 +59,6 @@ public class UserController implements Initializable {
 
     private ArrayList<Button> buttons;
 
-    public UserController(Controller controller) {
-        this.controller = controller;
-    }
-
     public UserController(AccHolder accHolder, Controller controller) {
         this.accHolder = accHolder;
         this.controller = controller;
@@ -86,10 +82,10 @@ public class UserController implements Initializable {
                 for (Button button1: buttons)
                     if (button1 != button)
                         button1.setDisable(false);
-                AddAccountContent addAccountContent = new AddAccountContent(controller);
+
                 Callback<Class<?>, Object> controllerFactory = type -> {
                     if (type == AddAccountContent.class) {
-                        return new AddAccountContent(controller);
+                        return new AddAccountContent(accHolder,controller);
                     } else {
                         try {
                             return type.newInstance() ;
@@ -120,10 +116,10 @@ public class UserController implements Initializable {
                 for (Button button1: buttons)
                     if (button1 != button)
                         button1.setDisable(false);
-                StatisticsContent statisticsContent = new StatisticsContent(controller);
+
                 Callback<Class<?>, Object> controllerFactory = type -> {
                     if (type == StatisticsContent.class) {
-                        return new StatisticsContent(controller);
+                        return new StatisticsContent(accHolder,controller);
                     } else {
                         try {
                             return type.newInstance() ;
@@ -154,10 +150,10 @@ public class UserController implements Initializable {
                 for (Button button1: buttons)
                     if (button1 != button)
                         button1.setDisable(false);
-                DisplayAccountsContent displayAccountsContent = new DisplayAccountsContent(controller);
+
                 Callback<Class<?>, Object> controllerFactory = type -> {
                     if (type == DisplayAccountsContent.class) {
-                        return new DisplayAccountsContent(controller);
+                        return new DisplayAccountsContent(accHolder,controller);
                     } else {
                         try {
                             return type.newInstance() ;
@@ -188,10 +184,10 @@ public class UserController implements Initializable {
                 for (Button button1: buttons)
                     if (button1 != button)
                         button1.setDisable(false);
-                AddTransactionContent addTransactionContent = new AddTransactionContent(controller);
+
                 Callback<Class<?>, Object> controllerFactory = type -> {
                     if (type == AddTransactionContent.class) {
-                        return new AddTransactionContent(controller);
+                        return new AddTransactionContent(accHolder,controller);
                     } else {
                         try {
                             return type.newInstance() ;
@@ -222,10 +218,10 @@ public class UserController implements Initializable {
                 for (Button button1: buttons)
                     if (button1 != button)
                         button1.setDisable(false);
-                DisplayTransactionsContent displayTransactionsContent = new DisplayTransactionsContent(controller);
+
                 Callback<Class<?>, Object> controllerFactory = type -> {
                     if (type == DisplayTransactionsContent.class) {
-                        return new DisplayTransactionsContent(controller);
+                        return new DisplayTransactionsContent(accHolder,controller);
                     } else {
                         try {
                             return type.newInstance() ;

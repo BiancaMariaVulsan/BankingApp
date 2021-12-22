@@ -29,10 +29,6 @@ public class AddUserTransactionController implements Initializable {
     AccHolder accHolder;
     Account account;
 
-    public AddUserTransactionController(Controller controller) {
-        this.controller = controller;
-    }
-
     public AddUserTransactionController(Controller controller, AccHolder accHolder, Account account) {
         this.controller = controller;
         this.accHolder = accHolder;

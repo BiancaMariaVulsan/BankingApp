@@ -28,10 +28,6 @@ public class AddAccountContent implements Initializable {
     @FXML
     private ChoiceBox<String> accountTypesChoiceBox;
 
-    public AddAccountContent(Controller controller) {
-        this.controller = controller;
-    }
-
     public AddAccountContent(AccHolder accHolder, Controller controller) {
         this.accHolder = accHolder;
         this.controller = controller;

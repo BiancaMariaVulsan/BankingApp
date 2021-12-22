@@ -30,11 +30,6 @@ public class AddTransactionContent implements Initializable {
     AccHolder accHolder;
     Controller controller;
 
-
-    public AddTransactionContent(Controller controller) {
-        this.controller = controller;
-    }
-
     public AddTransactionContent(AccHolder accHolder, Controller controller) {
         this.accHolder = accHolder;
         this.controller = controller;

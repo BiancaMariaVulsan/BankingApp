@@ -117,10 +117,10 @@ public class AdminController implements Initializable {
             public void handle(MouseEvent mouseEvent) {
                 Stage programStage = new Stage();
                 Parent programRoot;
-
+                AccHolder accHolder = controller.getAccHolderByUsername(usersTableView.getSelectionModel().getSelectedItem().getUserName());
                 Callback<Class<?>, Object> controllerFactory = type -> {
                     if (type == InspectUserController.class) {
-                        return new InspectUserController(controller);
+                        return new InspectUserController(accHolder,controller);
                     } else {
                         try {
                             return type.newInstance() ;

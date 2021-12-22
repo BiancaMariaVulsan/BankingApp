@@ -45,10 +45,6 @@ public class DisplayAccountsContent implements Initializable {
     private TableColumn<Savings,String> rateSavingsColumn;
     Controller controller;
 
-    public DisplayAccountsContent(Controller controller) {
-        this.controller = controller;
-    }
-
     public DisplayAccountsContent(AccHolder accHolder, Controller controller) {
         this.accHolder = accHolder;
         this.controller = controller;

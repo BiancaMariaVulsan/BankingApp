@@ -37,10 +37,6 @@ public class AccountController implements Initializable {
     AccHolder accHolder;
     Account account;
 
-    public AccountController(Controller controller) {
-        this.controller = controller;
-    }
-
     public AccountController(Controller controller, AccHolder accHolder, Account account) {
         this.controller = controller;
         this.accHolder = accHolder;

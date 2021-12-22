@@ -31,10 +31,6 @@ public class DisplayTransactionsContent implements Initializable {
     AccHolder accHolder;
     Controller controller;
 
-    public DisplayTransactionsContent(Controller controller) {
-        this.controller = controller;
-    }
-
     public DisplayTransactionsContent(AccHolder accHolder,Controller controller) {
         this.controller = controller;
         this.accHolder = accHolder;

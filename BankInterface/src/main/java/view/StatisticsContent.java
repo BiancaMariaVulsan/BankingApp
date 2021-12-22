@@ -20,10 +20,6 @@ public class StatisticsContent implements Initializable {
     private PieChart transactionsChart;
     Controller controller;
 
-    public StatisticsContent(Controller controller) {
-        this.controller = controller;
-    }
-
     public StatisticsContent(AccHolder accHolder, Controller controller) {
         this.accHolder = accHolder;
         this.controller = controller;
