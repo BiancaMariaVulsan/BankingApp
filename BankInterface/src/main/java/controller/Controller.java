@@ -130,4 +130,8 @@ public class Controller {
         accHolder.closeAccount(account);
     }
 
+    public AccHolder getAccHolderByUsername(String userName) {
+        return accHolderRepository.selectByUsername(userName);
+    }
+
 }

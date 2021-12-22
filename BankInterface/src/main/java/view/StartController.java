@@ -10,8 +10,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import model.AccHolder;
+import model.Admin;
+import repository.AccHolderRepository;
+import repository.AdminRepository;
+import repository.CurrentAccRepository;
+import repository.SavingsAccRepository;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class StartController {
     boolean isAdmin =true;
@@ -27,7 +34,10 @@ public class StartController {
 
 
     public void setUp(){
-
+        SavingsAccRepository savingsAccRepository = new SavingsAccRepository();
+        CurrentAccRepository currentAccRepository = new CurrentAccRepository();
+        AdminRepository adminRepository = new AdminRepository();
+        AccHolderRepository userRepository = new AccHolderRepository();
     }
 
     @FXML

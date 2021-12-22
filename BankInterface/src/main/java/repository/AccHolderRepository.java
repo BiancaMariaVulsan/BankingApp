@@ -101,4 +101,25 @@ public class AccHolderRepository extends Repository {
         }
         return false;
     }
+
+    public AccHolder selectByUsername(String username){
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        String query = "SELECT * FROM accholder WHERE user_name = " +  username;
+        try {
+            connection = DbConnection.getConnection();
+            statement = connection.prepareStatement(query);
+            resultSet = statement.executeQuery();
+
+            return createObject(resultSet);
+        }catch(SQLException e){
+            LOGGER.log(Level.WARNING, " Repository:selectById " + e.getMessage());
+            return null;
+        }finally{
+            DbConnection.close(resultSet);
+            DbConnection.close(statement);
+            DbConnection.close(connection);
+        }
+    }
 }
