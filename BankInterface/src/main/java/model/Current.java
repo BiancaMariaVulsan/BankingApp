@@ -5,19 +5,20 @@ public class Current extends Account {
     private int debitCardNr;
     private int debitCardPIN;
 
-    public Current(int id, AccHolder accHolder, double initialDeposit, int debitCardNr, int debitCardPIN , Category category) {
-        super(id, accHolder, initialDeposit, category);
+    /**
+     * Constructor used when reading from db
+     */
+    public Current(int id, AccHolder accHolder, double initialDeposit, int debitCardNr, int debitCardPIN , Category category, String accountNr) {
+        super(id, accHolder, initialDeposit, category, accountNr);
         this.debitCardNr = debitCardNr;
         this.debitCardPIN = debitCardPIN;
     }
 
+    /**
+     * Constructor used when inserting into db
+     */
     public Current(int id, AccHolder accHolder, double initialDeposit) {
         super(id, accHolder, initialDeposit);
-        init();
-    }
-
-    public Current(int id, AccHolder accHolder, double initialDeposit, Category category) {
-        super(id, accHolder, initialDeposit, category);
         init();
     }
 

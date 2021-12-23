@@ -64,8 +64,6 @@ public class UserController implements Initializable {
         this.accHolder = accHolder;
         System.out.println(accHolder.getFirstName());
         this.controller = controller;
-
-
     }
 
     @Override

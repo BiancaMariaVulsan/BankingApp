@@ -30,12 +30,13 @@ public class SavingsAccRepository extends Repository {
                 double initialDeposit = resultSet.getInt("balance");
                 int safetyBoxId = resultSet.getInt("safetybox_id");
                 int safetyBoxKey = resultSet.getInt("safetybox_key");
+                String accountNr = resultSet.getString("account_nr");
                 // select the account holder with "idUser"
                 CategoryRepository categoryRepository = new CategoryRepository();
                 Category category = (Category) categoryRepository.selectById(id_category);
                 AccHolderRepository accHolderRepository = new AccHolderRepository();
                 AccHolder accHolder = (AccHolder) accHolderRepository.selectById(idUser);
-                Savings savingsAcc = new Savings(id, accHolder, initialDeposit, safetyBoxId, safetyBoxKey, category);
+                Savings savingsAcc = new Savings(id, accHolder, initialDeposit, safetyBoxId, safetyBoxKey, category, accountNr);
                 savingAccounts.add(savingsAcc);
             }
             return savingAccounts;
@@ -55,11 +56,12 @@ public class SavingsAccRepository extends Repository {
                 int id_category = resultSet.getInt("id_category");
                 int safetyBoxId = resultSet.getInt("safetybox_id");
                 int safetyBoxKey = resultSet.getInt("safetybox_key");
+                String accountNr = resultSet.getString("account_nr");
                 CategoryRepository categoryRepository = new CategoryRepository();
                 Category category = (Category) categoryRepository.selectById(id_category);
                 AccHolderRepository accHolderRepository = new AccHolderRepository();
                 AccHolder accHolder = (AccHolder) accHolderRepository.selectById(id_user);
-                Savings savings = new Savings(id, accHolder, balance, safetyBoxId, safetyBoxKey, category);
+                Savings savings = new Savings(id, accHolder, balance, safetyBoxId, safetyBoxKey, category, accountNr);
                 return savings;
             }
         } catch (java.sql.SQLException e) {
@@ -73,7 +75,7 @@ public class SavingsAccRepository extends Repository {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         String query = "SELECT * FROM ";
-        query = query + "account WHERE account_nr = \'" + accNumber + "\'";
+        query = query + "view_savingsacc WHERE account_nr = \'" + accNumber + "\'";
 
         try {
             connection = DbConnection.getConnection();

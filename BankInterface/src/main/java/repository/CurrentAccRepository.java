@@ -29,12 +29,13 @@ public class CurrentAccRepository extends Repository{
                 double initialDeposit = resultSet.getInt("balance");
                 int cardId = resultSet.getInt("debitcard_nr");
                 int cardPin = resultSet.getInt("debitcard_pin");
+                String accountNr = resultSet.getString("account_nr");
                 // select the account holder with "idUser"
                 CategoryRepository categoryRepository = new CategoryRepository();
                 Category category = (Category) categoryRepository.selectById(id_category);
                 AccHolderRepository accHolderRepository = new AccHolderRepository();
                 AccHolder accHolder = (AccHolder) accHolderRepository.selectById(idUser);
-                Current currentAcc = new Current(id, accHolder, initialDeposit, cardId, cardPin, category);
+                Current currentAcc = new Current(id, accHolder, initialDeposit, cardId, cardPin, category, accountNr);
                 currentAccounts.add(currentAcc);
             }
             return currentAccounts;
@@ -54,11 +55,12 @@ public class CurrentAccRepository extends Repository{
                 int id_user = resultSet.getInt("id_user");
                 int cardId = resultSet.getInt("debitcard_nr");
                 int cardPin = resultSet.getInt("debitcard_pin");
+                String accountNr = resultSet.getString("account_nr");
                 AccHolderRepository accHolderRepository = new AccHolderRepository();
                 AccHolder accHolder = (AccHolder) accHolderRepository.selectById(id_user);
                 CategoryRepository categoryRepository = new CategoryRepository();
                 Category category = (Category) categoryRepository.selectById(id_category);
-                Current current = new Current(id, accHolder, balance, cardId, cardPin, category);
+                Current current = new Current(id, accHolder, balance, cardId, cardPin, category, accountNr);
                 return current;
             }
         } catch (java.sql.SQLException e) {
@@ -72,7 +74,7 @@ public class CurrentAccRepository extends Repository{
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         String query = "SELECT * FROM ";
-        query = query + "account WHERE account_nr = \'" + accNumber + "\'";
+        query = query + "view_currentacc WHERE account_nr = \'" + accNumber + "\'";
 
         try {
             connection = DbConnection.getConnection();

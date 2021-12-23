@@ -5,20 +5,21 @@ public class Savings extends Account {
     private int safetyDepositBoxId;
     private int safetyDepositBoxKey;
 
+    /**
+     * Constructor used when inserting in db
+     */
     public Savings(int id, AccHolder accHolder, double initialDeposit) {
         super(id, accHolder, initialDeposit);
         init();
     }
 
-    public Savings(int id, AccHolder accHolder, double initialDeposit, int safetyDepositBoxId, int safetyDepositBoxKey, Category category) {
-        super(id, accHolder, initialDeposit, category);
+    /**
+     * Constructor used when reading from db
+     */
+    public Savings(int id, AccHolder accHolder, double initialDeposit, int safetyDepositBoxId, int safetyDepositBoxKey, Category category, String accountNr) {
+        super(id, accHolder, initialDeposit, category, accountNr);
         this.safetyDepositBoxId = safetyDepositBoxId;
         this.safetyDepositBoxKey = safetyDepositBoxKey;
-    }
-
-    public Savings(int id, AccHolder accHolder, double initialDeposit, Category category) {
-        super(id, accHolder, initialDeposit, category);
-        init();
     }
 
     private void init()

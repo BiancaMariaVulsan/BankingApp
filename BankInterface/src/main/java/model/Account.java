@@ -16,6 +16,7 @@ public abstract class Account extends BaseModel implements IRate {
 
     private double balance;
     private Category category;
+    private Date date;
 
     protected String accNumber;
     protected double rate;
@@ -23,12 +24,12 @@ public abstract class Account extends BaseModel implements IRate {
     /**
      * Constructor used when reading from db
      */
-    public Account(int id, AccHolder accHolder, double initalDeposit, Category category) {
+    public Account(int id, AccHolder accHolder, double initalDeposit, Category category, String accNumber) {
         super(id);
         this.accHolder = accHolder;
         this.category = category;
         balance = initalDeposit;
-        init();
+        this.accNumber = accNumber;
     }
 
     /**
@@ -63,11 +64,7 @@ public abstract class Account extends BaseModel implements IRate {
         // initialize the list of transactions (read them from db)
         TransactionRepository transactionRepository = new TransactionRepository();
         transactions.clear();
-        transactions = transactionRepository.selectByUserId(id);
-        for(Transaction transaction : transactions) {
-            System.out.println(transaction.getValue());
-        }
-        System.out.println("End");
+        transactions = transactionRepository.selectByUserId(this.id);
         return transactions;
     }
     public Category getCategory() { return category; }
@@ -77,10 +74,12 @@ public abstract class Account extends BaseModel implements IRate {
     }
 
     private String setAccountNumber() {
+        LocalDate localDate = LocalDate.now();
+        date = java.sql.Date.valueOf(localDate);
         String cnp = accHolder.getCnp();
         char firstName = accHolder.getFirstName().charAt(0);
         char lastName = accHolder.getLastName().charAt(0);
-        return Character.toString(firstName) + Character.toString(lastName) + cnp;
+        return Character.toString(firstName) + Character.toString(lastName) + date.getTime();
     }
 
     public void compound() {
@@ -142,19 +141,18 @@ public abstract class Account extends BaseModel implements IRate {
                 System.out.println("Transfer " + amount + " to " + receiver);
                 printBalance();
             } else {
-                //TODO: USE A LOGGER
-                System.out.println("Please make sure that you have enough money");
+                throw new RuntimeException("Please make sure that you have enough money");
             }
         } else {
-            //TODO: USE A LOGGER
-            System.out.println("Please choose a different receiver!");
+            throw new RuntimeException("Please choose a different receiver!");
         }
     }
 
     public ArrayList<Transaction> getTransactionsByCategory(Category category) {
         ArrayList<Transaction> transactionsByCateg = new ArrayList<>();
+        ArrayList<Transaction> transactions = getTransactions();
         for (Transaction transaction : transactions) {
-            if(transaction.getCategory() == category) {
+            if(transaction.getCategory().id == category.id) {
                 transactionsByCateg.add(transaction);
             }
         }

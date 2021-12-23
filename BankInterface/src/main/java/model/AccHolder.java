@@ -61,10 +61,8 @@ public class AccHolder extends User{
         accounts.clear();
         accounts = currentAccRepository.selectByUserId(this.id);
         accounts.addAll(savingsAccRepository.selectByUserId(this.id));
-        System.out.println("Inside getAccounts");
         return accounts;
     }
-    //todo: getter separat
 
     public String getUserName() {
         return userName;

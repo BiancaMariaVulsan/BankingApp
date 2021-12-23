@@ -9,7 +9,7 @@ import java.util.logging.Level;
 
 public class TransactionRepository extends Repository {
 
-    private ArrayList<Transaction> transactions = new ArrayList<>();
+    private ArrayList<Transaction> transactions;
 
     public TransactionRepository() {
         super("transaction");
@@ -17,6 +17,7 @@ public class TransactionRepository extends Repository {
 
     @Override
     protected ArrayList<Transaction> createObjects(ResultSet resultSet) {
+        transactions = new ArrayList<>();
         try{
             while (resultSet.next())
             {
@@ -55,7 +56,7 @@ public class TransactionRepository extends Repository {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        String query = "SELECT * FROM transaction WHERE id_sender = " + id + " OR id_receiver = " + id;
+        String query = "SELECT * FROM transaction WHERE id_sender = " + id; // + " OR id_receiver = " + id;
         try {
             connection = DbConnection.getConnection();
             statement = connection.prepareStatement(query);
@@ -63,7 +64,7 @@ public class TransactionRepository extends Repository {
 
             return createObjects(resultSet);
         }catch(SQLException e){
-            LOGGER.log(Level.WARNING, "transaction Repository:selectAllEntities " + e.getMessage());
+            LOGGER.log(Level.WARNING, "transaction Repository:selectByUserId " + e.getMessage());
             return null;
         }finally{
             DbConnection.close(resultSet);

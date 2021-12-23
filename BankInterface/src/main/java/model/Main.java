@@ -36,13 +36,12 @@ public class Main {
 
 //        controller.addAccountHolder("dsdf", "asdfad", "352354", "asjdks", "2134");
         AccHolder accHolder = controller.getAccHolderByUsername("BiaV");
-        // ArrayList<Account> accounts = controller.getAccountsByUser(accHolder)
-        ArrayList<Transaction> transactions = controller.getAllTransactionsByUser(accHolder);
-        transactions.clear();
-        transactions = controller.getAllTransactionsByUser(accHolder);
-        for(Transaction transaction : transactions) {
-            System.out.println(transaction.getValue());
-        }
+        ArrayList<Account> accounts = controller.getAccountsByUser(accHolder);
+        // controller.addTransaction(accounts.get(0), "1AM6082347216534", 50.0, "bla bla");
+//        controller.addAccountCurrent(56, accHolder);
+        Category category = new Category(5, "Other");
+        int nr = controller.getNumberOfTransactionByCategory(accHolder, category);
+        System.out.println(nr);
 
         /** Admin - just for testing -> uncomment and change the id accordingly to test delete */
 //        Date date = new Date(2001, 6, 15);

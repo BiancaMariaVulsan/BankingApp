@@ -11,8 +11,6 @@ public class Transaction extends BaseModel {
     private Account receiver;
     private String description;
     private Category category;
-
-    // TODO: VAD CE TIP DE DATA SA PUN
     private Date date;
 
     /**

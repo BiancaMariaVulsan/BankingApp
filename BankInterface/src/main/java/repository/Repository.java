@@ -286,9 +286,9 @@ public abstract class Repository<T extends BaseModel> {
     public boolean checkIfObjectAlreadyExists(Object obj) {
         String query = "";
         if(obj instanceof User) {
-            query = "SELECT COUNT(*) AS counter FROM person WHERE cnp = \'" + ((User) obj).getCnp() + "\'";
+            query = "SELECT COUNT (*) AS counter FROM person WHERE cnp = \'" + ((User) obj).getCnp() + "\'";
         } else if(obj instanceof Account) {
-            query = "SELECT COUNT(*) AS counter FROM account WHERE account_nr = \'" + ((Account) obj).getAccNumber() + "\'";
+            query = "SELECT COUNT (*) AS counter FROM account WHERE account_nr = \'" + ((Account) obj).getAccNumber() + "\'";
         } else {
             LOGGER.log(Level.WARNING, tableName + " Repository:checkIfObjectAlreadyExists " + "The object type is not valid!");
             return false;

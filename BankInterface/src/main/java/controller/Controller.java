@@ -25,7 +25,6 @@ public class Controller {
     }
 
     public boolean checkUserExists(String username, String password){
-        // todo check by username and password
         return accHolderRepository.checkIfUserExists(username, password);
     }
 
@@ -37,27 +36,31 @@ public class Controller {
             throw new RuntimeException("There is already an account holder with this username");
     }
     public void addAccountSavings(double initialDeposit, AccHolder accHolder){
-        if (initialDeposit < 0)
-            throw new RuntimeException("The initial deposit must be positive ! ");
-        Savings savings = new Savings(1,accHolder,initialDeposit);
-        if(savingsAccRepository.checkIfObjectAlreadyExists(savings))
+        if (initialDeposit < 50)
+            throw new RuntimeException("You have to deposit at least 50$ initially!");
+        Savings savings = new Savings(1, accHolder, initialDeposit);
+        if(!savingsAccRepository.checkIfObjectAlreadyExists(savings)) {
             accHolder.createAccount(savings);
+        }
     }
     public void addAccountCurrent(double initialDeposit, AccHolder accHolder){
-        if (initialDeposit < 0)
-            throw new RuntimeException("The initial deposit must be positive ! ");
+        if (initialDeposit < 50)
+            throw new RuntimeException("You have to deposit at least 50$ initially!");
         Current current = new Current(1,accHolder,initialDeposit);
-        if(currentAccRepository.checkIfObjectAlreadyExists(current))
+        if(!currentAccRepository.checkIfObjectAlreadyExists(current)) {
             accHolder.createAccount(current);
+        }
     }
-    public void addTransaction(Account senderAcc, String reciever, double value, String descriprion){
-        // todo select by accNr
+    public void addTransaction(Account senderAcc, String reciever, double value, String descriprion) {
         Account receiverAcc = savingsAccRepository.selectByAccountNr(reciever);
         if(receiverAcc == null) {
             receiverAcc = currentAccRepository.selectByAccountNr(reciever);
         }
         if (receiverAcc == null)
             throw new RuntimeException("There is no reciever with this account number");
+        else if(senderAcc.id == receiverAcc.id) {
+            throw new RuntimeException("Please select a different receiver");
+        }
         // add transaction to repo
         senderAcc.transfer(receiverAcc, value, descriprion);
     }
@@ -79,13 +82,7 @@ public class Controller {
         transactions.clear();
         for (Account account : accounts){
             transactions.addAll(account.getTransactions());
-            System.out.println(account.getAccNumber());
         }
-        System.out.println("End");
-        for(Transaction transaction : transactions) {
-            System.out.println(transaction.getValue());
-        }
-        System.out.println("End");
         return transactions;
     }
 
@@ -101,9 +98,9 @@ public class Controller {
     public int getNumberOfTransactionByCategory(AccHolder accHolder,Category category){
         ArrayList<Account> accounts = accHolder.getAccounts();
         int totalCount = 0;
-        for (Account account : accounts){
-         ArrayList<Transaction> transactions = account.getTransactionsByCategory(category);
-         totalCount+= transactions.size();
+        for (Account account : accounts) {
+             ArrayList<Transaction> transactions = account.getTransactionsByCategory(category);
+             totalCount+= transactions.size();
         }
         return totalCount;
     }
