@@ -5,6 +5,12 @@ public class Current extends Account {
     private int debitCardNr;
     private int debitCardPIN;
 
+    public Current(int id, AccHolder accHolder, double initialDeposit, int debitCardNr, int debitCardPIN , Category category) {
+        super(id, accHolder, initialDeposit, category);
+        this.debitCardNr = debitCardNr;
+        this.debitCardPIN = debitCardPIN;
+    }
+
     public Current(int id, AccHolder accHolder, double initialDeposit) {
         super(id, accHolder, initialDeposit);
         init();

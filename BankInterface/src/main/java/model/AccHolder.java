@@ -49,9 +49,19 @@ public class AccHolder extends User{
 
     }
 
+    public ArrayList<Savings> getSavings() {
+        return savingsAccRepository.selectByUserId(this.id);
+    }
+
+    public ArrayList<Current> getCurrents() {
+        return currentAccRepository.selectByUserId(this.id);
+    }
+
     public ArrayList<Account> getAccounts() {
-        accounts = currentAccRepository.selectByUserId(id);
-        accounts.addAll(savingsAccRepository.selectByUserId(id));
+        accounts.clear();
+        accounts = currentAccRepository.selectByUserId(this.id);
+        accounts.addAll(savingsAccRepository.selectByUserId(this.id));
+        System.out.println("Inside getAccounts");
         return accounts;
     }
     //todo: getter separat

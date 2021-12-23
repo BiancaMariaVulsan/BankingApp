@@ -8,7 +8,7 @@
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.AdminController">
    <children>
-      <VBox prefHeight="400.0" prefWidth="223.0">
+      <VBox prefHeight="400.0" prefWidth="237.0">
          <children>
             <GridPane prefHeight="357.0" prefWidth="196.0">
               <columnConstraints>
@@ -28,11 +28,11 @@
                   <Label alignment="CENTER" prefHeight="33.0" prefWidth="106.0" text="CNP :" GridPane.rowIndex="2" />
                   <Label alignment="CENTER" prefHeight="33.0" prefWidth="106.0" text="Username :" GridPane.rowIndex="3" />
                   <Label alignment="CENTER" prefHeight="31.0" prefWidth="106.0" text="Password :" GridPane.rowIndex="4" />
-                  <TextField GridPane.columnIndex="1" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField fx:id="firstNameTextField" GridPane.columnIndex="1" />
+                  <TextField fx:id="lastNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="CNPTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="usernameTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="passwordTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                </children>
                <VBox.margin>
                   <Insets right="10.0" />
@@ -40,22 +40,32 @@
             </GridPane>
             <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="63.0" prefWidth="206.0">
               <items>
-                  <Button fx:id="exitButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="52.0">
+                  <Button fx:id="exitButton" mnemonicParsing="false" prefHeight="41.0" prefWidth="28.0">
                      <graphic>
-                        <ImageView fitHeight="39.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="34.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../remove-button.png" />
                            </image>
                         </ImageView>
                      </graphic></Button>
-                <Button fx:id="addUserButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="52.0">
+                <Button fx:id="addUserButton" mnemonicParsing="false" prefHeight="41.0" prefWidth="48.0">
                      <graphic>
-                        <ImageView fitHeight="39.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="42.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../plus.png" />
                            </image>
                         </ImageView>
                      </graphic></Button>
+                  <Separator orientation="VERTICAL" prefHeight="25.0" prefWidth="12.0">
+                     <padding>
+                        <Insets left="5.0" right="5.0" />
+                     </padding>
+                  </Separator>
+                  <Button fx:id="removeUserButton" mnemonicParsing="false" prefHeight="23.0" prefWidth="88.0" text="Remove User" textFill="#df0e0e">
+                     <font>
+                        <Font name="System Bold" size="10.0" />
+                     </font>
+                  </Button>
               </items>
             </ToolBar>
          </children>
@@ -70,12 +80,12 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TableView  fx:id="usersTableView" prefHeight="357.0" prefWidth="404.0">
+            <TableView fx:id="usersTableView" prefHeight="357.0" prefWidth="404.0">
               <columns>
-                <TableColumn prefWidth="101.19994962215424" text="Username" />
-                <TableColumn prefWidth="85.59998321533203" text="First Name" />
-                  <TableColumn prefWidth="106.20001220703125" text="Last Name" />
-                  <TableColumn prefWidth="94.5999755859375" text="CNP" />
+                <TableColumn fx:id="usernameColumn" prefWidth="101.19994962215424" text="Username" />
+                <TableColumn fx:id="firstNameColumn" prefWidth="85.59998321533203" text="First Name" />
+                  <TableColumn fx:id="lastNameColumn" prefWidth="106.20001220703125" text="Last Name" />
+                  <TableColumn fx:id="CNPColumn" prefWidth="94.5999755859375" text="CNP" />
               </columns>
             </TableView>
          </children>

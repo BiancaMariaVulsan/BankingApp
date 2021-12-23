@@ -17,6 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.AccHolder;
+import model.Account;
 
 import java.io.IOException;
 import java.net.URL;
@@ -61,7 +62,10 @@ public class UserController implements Initializable {
 
     public UserController(AccHolder accHolder, Controller controller) {
         this.accHolder = accHolder;
+        System.out.println(accHolder.getFirstName());
         this.controller = controller;
+
+
     }
 
     @Override

@@ -11,11 +11,9 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.AccHolder;
+import model.Account;
 import model.Admin;
-import repository.AccHolderRepository;
-import repository.AdminRepository;
-import repository.CurrentAccRepository;
-import repository.SavingsAccRepository;
+import repository.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,20 +29,17 @@ public class StartController {
     private Button signInButton;
     @FXML
     private Button registerButton;
-    SavingsAccRepository savingsAccRepository;
-    CurrentAccRepository currentAccRepository;
-    AdminRepository adminRepository;
-    AccHolderRepository userRepository;
+
 
     public void setUp(){
         SavingsAccRepository savingsAccRepository = new SavingsAccRepository();
         CurrentAccRepository currentAccRepository = new CurrentAccRepository();
         AdminRepository adminRepository = new AdminRepository();
         AccHolderRepository userRepository = new AccHolderRepository();
-        this.savingsAccRepository = savingsAccRepository;
-        this.currentAccRepository = currentAccRepository;
-        this.adminRepository = adminRepository;
-        this.userRepository = userRepository;
+        CategoryRepository categoryRepository = new CategoryRepository();
+        TransactionRepository transactionRepository = new TransactionRepository();
+        controller = new Controller(userRepository,adminRepository,categoryRepository,currentAccRepository,savingsAccRepository,transactionRepository);
+
 
     }
 
@@ -153,6 +148,7 @@ public class StartController {
                     Stage programStage = new Stage();
                     Parent programRoot;
                     AccHolder accHolder = controller.getAccHolderByUsername(usernameTextField.getText());
+
                     Callback<Class<?>, Object> controllerFactory = type -> {
                         if (type == UserController.class) {
                             return new UserController(accHolder,controller);

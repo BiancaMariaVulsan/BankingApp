@@ -11,7 +11,7 @@ import java.util.logging.Level;
 
 public class SavingsAccRepository extends Repository {
 
-    private ArrayList<Savings> savingAccounts = new ArrayList<>();
+    private ArrayList<Savings> savingAccounts;
 
     /**
      * / Constructor used to send the name of the corresponding table from db
@@ -20,6 +20,7 @@ public class SavingsAccRepository extends Repository {
 
     @Override
     protected ArrayList<Savings> createObjects(ResultSet resultSet) {
+        savingAccounts = new ArrayList<>();
         try{
             while (resultSet.next())
             {
@@ -27,12 +28,14 @@ public class SavingsAccRepository extends Repository {
                 int idUser = resultSet.getInt("id_user");
                 int id_category = resultSet.getInt("id_category");
                 double initialDeposit = resultSet.getInt("balance");
+                int safetyBoxId = resultSet.getInt("safetybox_id");
+                int safetyBoxKey = resultSet.getInt("safetybox_key");
                 // select the account holder with "idUser"
                 CategoryRepository categoryRepository = new CategoryRepository();
                 Category category = (Category) categoryRepository.selectById(id_category);
                 AccHolderRepository accHolderRepository = new AccHolderRepository();
                 AccHolder accHolder = (AccHolder) accHolderRepository.selectById(idUser);
-                Savings savingsAcc = new Savings(id, accHolder, initialDeposit, category);
+                Savings savingsAcc = new Savings(id, accHolder, initialDeposit, safetyBoxId, safetyBoxKey, category);
                 savingAccounts.add(savingsAcc);
             }
             return savingAccounts;
@@ -50,11 +53,13 @@ public class SavingsAccRepository extends Repository {
                 double balance = resultSet.getDouble("balance");
                 int id_user = resultSet.getInt("id_user");
                 int id_category = resultSet.getInt("id_category");
+                int safetyBoxId = resultSet.getInt("safetybox_id");
+                int safetyBoxKey = resultSet.getInt("safetybox_key");
                 CategoryRepository categoryRepository = new CategoryRepository();
                 Category category = (Category) categoryRepository.selectById(id_category);
                 AccHolderRepository accHolderRepository = new AccHolderRepository();
                 AccHolder accHolder = (AccHolder) accHolderRepository.selectById(id_user);
-                Savings savings = new Savings(id, accHolder, balance, category);
+                Savings savings = new Savings(id, accHolder, balance, safetyBoxId, safetyBoxKey, category);
                 return savings;
             }
         } catch (java.sql.SQLException e) {
@@ -68,7 +73,7 @@ public class SavingsAccRepository extends Repository {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         String query = "SELECT * FROM ";
-        query = query + "account WHERE account_nr = " + accNumber;
+        query = query + "account WHERE account_nr = \'" + accNumber + "\'";
 
         try {
             connection = DbConnection.getConnection();
@@ -77,7 +82,7 @@ public class SavingsAccRepository extends Repository {
 
             return createObject(resultSet);
         }catch(SQLException e) {
-            LOGGER.log(Level.WARNING, "savingsacc Repository:selectByAccountNr " + e.getMessage());
+            LOGGER.log(Level.WARNING, "savingsacc SavingsAccRepository:selectByAccountNr " + e.getMessage());
             return null;
         }finally{
             DbConnection.close(resultSet);

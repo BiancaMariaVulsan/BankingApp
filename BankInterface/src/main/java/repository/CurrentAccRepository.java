@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 
 public class CurrentAccRepository extends Repository{
-    private ArrayList<Current> currentAccounts = new ArrayList<>();
+    private ArrayList<Current> currentAccounts;
 
     /**
      * / Constructor used to send the name of the corresponding table from db
@@ -19,6 +19,7 @@ public class CurrentAccRepository extends Repository{
 
     @Override
     protected ArrayList<Current> createObjects(ResultSet resultSet) {
+        currentAccounts = new ArrayList<>();
         try{
             while (resultSet.next())
             {
@@ -26,12 +27,14 @@ public class CurrentAccRepository extends Repository{
                 int idUser = resultSet.getInt("id_user");
                 int id_category = resultSet.getInt("id_category");
                 double initialDeposit = resultSet.getInt("balance");
+                int cardId = resultSet.getInt("debitcard_nr");
+                int cardPin = resultSet.getInt("debitcard_pin");
                 // select the account holder with "idUser"
                 CategoryRepository categoryRepository = new CategoryRepository();
                 Category category = (Category) categoryRepository.selectById(id_category);
                 AccHolderRepository accHolderRepository = new AccHolderRepository();
                 AccHolder accHolder = (AccHolder) accHolderRepository.selectById(idUser);
-                Current currentAcc = new Current(id, accHolder, initialDeposit, category);
+                Current currentAcc = new Current(id, accHolder, initialDeposit, cardId, cardPin, category);
                 currentAccounts.add(currentAcc);
             }
             return currentAccounts;
@@ -49,11 +52,13 @@ public class CurrentAccRepository extends Repository{
                 int id_category = resultSet.getInt("id_category");
                 double balance = resultSet.getDouble("balance");
                 int id_user = resultSet.getInt("id_user");
+                int cardId = resultSet.getInt("debitcard_nr");
+                int cardPin = resultSet.getInt("debitcard_pin");
                 AccHolderRepository accHolderRepository = new AccHolderRepository();
                 AccHolder accHolder = (AccHolder) accHolderRepository.selectById(id_user);
                 CategoryRepository categoryRepository = new CategoryRepository();
                 Category category = (Category) categoryRepository.selectById(id_category);
-                Current current = new Current(id, accHolder, balance, category);
+                Current current = new Current(id, accHolder, balance, cardId, cardPin, category);
                 return current;
             }
         } catch (java.sql.SQLException e) {
@@ -67,7 +72,7 @@ public class CurrentAccRepository extends Repository{
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         String query = "SELECT * FROM ";
-        query = query + "account WHERE account_nr = " + accNumber;
+        query = query + "account WHERE account_nr = \'" + accNumber + "\'";
 
         try {
             connection = DbConnection.getConnection();
@@ -76,7 +81,7 @@ public class CurrentAccRepository extends Repository{
 
             return createObject(resultSet);
         }catch(SQLException e) {
-            LOGGER.log(Level.WARNING, "currentacc Repository:selectByAccountNr " + e.getMessage());
+            LOGGER.log(Level.WARNING, "currentacc CurrentAccRepository:selectByAccountNr " + e.getMessage());
             return null;
         }finally{
             DbConnection.close(resultSet);

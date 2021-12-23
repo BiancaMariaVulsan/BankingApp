@@ -9,15 +9,15 @@ import java.util.ArrayList;
 
 public class Controller {
     AccHolderRepository accHolderRepository ;
-    AdminController adminController;
+    AdminRepository adminRepository;
     CategoryRepository categoryRepository;
     CurrentAccRepository currentAccRepository;
     SavingsAccRepository savingsAccRepository;
     TransactionRepository transactionRepository;
 
-    public Controller(AccHolderRepository accHolderRepository, AdminController adminController, CategoryRepository categoryRepository, CurrentAccRepository currentAccRepository, SavingsAccRepository savingsAccRepository, TransactionRepository transactionRepository) {
+    public Controller(AccHolderRepository accHolderRepository, AdminRepository adminRepository, CategoryRepository categoryRepository, CurrentAccRepository currentAccRepository, SavingsAccRepository savingsAccRepository, TransactionRepository transactionRepository) {
         this.accHolderRepository = accHolderRepository;
-        this.adminController = adminController;
+        this.adminRepository = adminRepository;
         this.categoryRepository = categoryRepository;
         this.currentAccRepository = currentAccRepository;
         this.savingsAccRepository = savingsAccRepository;
@@ -40,13 +40,15 @@ public class Controller {
         if (initialDeposit < 0)
             throw new RuntimeException("The initial deposit must be positive ! ");
         Savings savings = new Savings(1,accHolder,initialDeposit);
-        accHolder.createAccount(savings);
+        if(savingsAccRepository.checkIfObjectAlreadyExists(savings))
+            accHolder.createAccount(savings);
     }
     public void addAccountCurrent(double initialDeposit, AccHolder accHolder){
         if (initialDeposit < 0)
             throw new RuntimeException("The initial deposit must be positive ! ");
         Current current = new Current(1,accHolder,initialDeposit);
-        accHolder.createAccount(current);
+        if(currentAccRepository.checkIfObjectAlreadyExists(current))
+            accHolder.createAccount(current);
     }
     public void addTransaction(Account senderAcc, String reciever, double value, String descriprion){
         // todo select by accNr
@@ -65,30 +67,25 @@ public class Controller {
     }
 
     public ArrayList<Savings> getSavingsByUser(AccHolder accHolder){
-        ArrayList<Account> accounts = accHolder.getAccounts();
-        ArrayList<Savings> savings = new ArrayList<>();
-        for (Account account :  accounts){
-            if (account instanceof Savings)
-                savings.add((Savings) account);
-        }
-        return savings;
+        return accHolder.getSavings();
     }
     public ArrayList<Current> getCurrentsByUser(AccHolder accHolder){
-        ArrayList<Account> accounts = accHolder.getAccounts();
-        ArrayList<Current> currents = new ArrayList<>();
-        for (Account account :  accounts){
-            if (account instanceof Current)
-                currents.add((Current) account);
-        }
-        return currents;
+        return accHolder.getCurrents();
     }
 
     public ArrayList<Transaction> getAllTransactionsByUser(AccHolder accHolder){
         ArrayList<Account> accounts = accHolder.getAccounts();
         ArrayList<Transaction> transactions = new ArrayList<>();
+        transactions.clear();
         for (Account account : accounts){
             transactions.addAll(account.getTransactions());
+            System.out.println(account.getAccNumber());
         }
+        System.out.println("End");
+        for(Transaction transaction : transactions) {
+            System.out.println(transaction.getValue());
+        }
+        System.out.println("End");
         return transactions;
     }
 

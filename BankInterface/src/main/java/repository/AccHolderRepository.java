@@ -67,8 +67,8 @@ public class AccHolderRepository extends Repository {
      * @return true if the user already exists in the database, false otherwise
      */
     public boolean checkIfUserExists(String username, String password) {
-        String  query = "SELECT COUNT(*) AS counter FROM accholder WHERE user_name = \'" + username + "\' "
-                    + "passowrd = \'" + password + "\'";
+        String  query = "SELECT COUNT (*) AS counter FROM accholder WHERE user_name = \'" + username + "\' "
+                    + "AND password = \'" + password + "\'";
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -106,7 +106,7 @@ public class AccHolderRepository extends Repository {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        String query = "SELECT * FROM accholder WHERE user_name = " +  username;
+        String query = "SELECT * FROM view_accholder WHERE user_name = \'" +  username + "\'";
         try {
             connection = DbConnection.getConnection();
             statement = connection.prepareStatement(query);

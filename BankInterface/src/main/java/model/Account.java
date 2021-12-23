@@ -62,7 +62,12 @@ public abstract class Account extends BaseModel implements IRate {
     public ArrayList<Transaction> getTransactions() {
         // initialize the list of transactions (read them from db)
         TransactionRepository transactionRepository = new TransactionRepository();
+        transactions.clear();
         transactions = transactionRepository.selectByUserId(id);
+        for(Transaction transaction : transactions) {
+            System.out.println(transaction.getValue());
+        }
+        System.out.println("End");
         return transactions;
     }
     public Category getCategory() { return category; }

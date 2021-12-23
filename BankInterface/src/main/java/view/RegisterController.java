@@ -109,10 +109,12 @@ public class RegisterController implements Initializable {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setContentText(exception.getMessage());
+                    exception.printStackTrace();
                     Button confirm = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
                     confirm.setDefaultButton(false);
                     confirm.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
                     alert.showAndWait();
+                    return;
                 }
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);

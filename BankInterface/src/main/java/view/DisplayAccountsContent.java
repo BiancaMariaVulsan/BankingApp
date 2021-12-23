@@ -10,13 +10,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
 import model.AccHolder;
+import model.Account;
 import model.Current;
 import model.Savings;
 
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class DisplayAccountsContent implements Initializable {
     AccHolder accHolder;
@@ -48,10 +47,12 @@ public class DisplayAccountsContent implements Initializable {
     public DisplayAccountsContent(AccHolder accHolder, Controller controller) {
         this.accHolder = accHolder;
         this.controller = controller;
+
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         setCurrentTable();
         setSavingsTable();
     }
@@ -60,14 +61,26 @@ public class DisplayAccountsContent implements Initializable {
         accNumberCurrentColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getAccNumber()));
         cardNumberCurrentColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(String.valueOf(cellData.getValue().getDebitCardNr())));
         currentsItems.addAll(controller.getCurrentsByUser(accHolder));
+        System.out.println("Currents :");
+        LinkedHashSet<Current> currentsSet = new LinkedHashSet<>(controller.getCurrentsByUser(accHolder));
+        for (Current current : currentsSet)
+            System.out.println(current.getAccNumber());
         currentTableView.setItems(currentsItems);
     }
 
     public  void setSavingsTable(){
         savingsItems.clear();
+        System.out.println("Savings :");
         accNumberSavingsColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getAccNumber()));
         cardNumberSavingsColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(String.valueOf(cellData.getValue().getSafetyDepositBoxId())));
         savingsItems.addAll(controller.getSavingsByUser(accHolder));
+        LinkedHashSet<Savings> savingsSet = new LinkedHashSet<>(controller.getSavingsByUser(accHolder));
+        System.out.println(accHolder.getFirstName());
+        for (Account saving : savingsSet) {
+            System.out.println(saving.getAccNumber());
+            System.out.println(saving.getBalance());
+        }
+        System.out.println("Over");
         savingsTableView.setItems(savingsItems);
     }
 

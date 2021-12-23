@@ -156,5 +156,8 @@ public class AdminController implements Initializable {
         usernameColumn.setCellValueFactory(cellData->new ReadOnlyStringWrapper(String.valueOf(cellData.getValue().getUserName())));
         usersItems.addAll(controller.getAllAccountHolders());
         usersTableView.setItems(usersItems);
+        for(AccHolder accHolder : controller.getAllAccountHolders()) {
+            System.out.println(accHolder.getFirstName());
+        }
     }
 }

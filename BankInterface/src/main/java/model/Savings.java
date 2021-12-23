@@ -10,6 +10,12 @@ public class Savings extends Account {
         init();
     }
 
+    public Savings(int id, AccHolder accHolder, double initialDeposit, int safetyDepositBoxId, int safetyDepositBoxKey, Category category) {
+        super(id, accHolder, initialDeposit, category);
+        this.safetyDepositBoxId = safetyDepositBoxId;
+        this.safetyDepositBoxKey = safetyDepositBoxKey;
+    }
+
     public Savings(int id, AccHolder accHolder, double initialDeposit, Category category) {
         super(id, accHolder, initialDeposit, category);
         init();
