@@ -30,7 +30,7 @@
                   <Label alignment="CENTER" prefHeight="28.0" prefWidth="116.0" text="Account Type :" GridPane.rowIndex="1" />
                   <Label alignment="CENTER" prefHeight="32.0" prefWidth="116.0" text="Initial Deposit :" GridPane.rowIndex="2" />
                   <ChoiceBox fx:id="accountTypeChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Spinner fx:id="initialDepositSpinner" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="initialDepositTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
                <VBox.margin>
                   <Insets right="10.0" />

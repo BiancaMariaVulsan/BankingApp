@@ -2,6 +2,8 @@ package view;
 
 import controller.Controller;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,6 +27,8 @@ import java.util.ResourceBundle;
 
 public class InspectUserController implements Initializable {
     @FXML
+    private TextField initialDepositTextField;
+    @FXML
     private TableView<Transaction> transactionsTableView;
     ObservableList<Transaction> transactionsItems = FXCollections.observableArrayList();
     @FXML
@@ -43,8 +47,7 @@ public class InspectUserController implements Initializable {
     private Button removeButton;
     @FXML
     private Button addButton;
-    @FXML
-    private Spinner<Integer> initialDepositSpinner;
+
     Controller controller;
     @FXML
     private Button addTransactionButton;
@@ -59,15 +62,17 @@ public class InspectUserController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         accountTypeChoiceBox.getItems().add("Savings");
         accountTypeChoiceBox.getItems().add("Current");
+        setAccountChoiceBox();
+
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 try {
                     if (accountTypeChoiceBox.getValue().equals("Savings")){
-                        controller.addAccountSavings(initialDepositSpinner.getValue(),accHolder);
+                        controller.addAccountSavings(Double.parseDouble(initialDepositTextField.getText()),accHolder);
                     }
                     else {
-                        controller.addAccountCurrent(initialDepositSpinner.getValue(),accHolder);
+                        controller.addAccountCurrent(Double.parseDouble(initialDepositTextField.getText()),accHolder);
                     }
                     setAccountChoiceBox();
                 }catch (RuntimeException exception){
@@ -133,17 +138,30 @@ public class InspectUserController implements Initializable {
                 }
             }
         });
+        accountChoiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+                System.out.println(observableValue.getValue());
+                setTransactionsTableView(observableValue.getValue().intValue());
+            }
+        });
     }
     public void  setAccountChoiceBox(){
+        accountChoiceBox.getItems().clear();
+        System.out.println(controller.getAccountsByUser(accHolder).size());
         accountChoiceBox.getItems().addAll(controller.getAccountsByUser(accHolder));
     }
-    public void setTransactionsTableView(){
+    public void setTransactionsTableView(int index){
         transactionsItems.clear();
+        if (index < 0) {
+            transactionsTableView.getItems().clear();
+            return;
+        }
         recieverColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getReceiver().getAccNumber()));
         categoryColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getCategory().getName()));
         valueColumn.setCellValueFactory(cellData->new ReadOnlyStringWrapper(String.valueOf(cellData.getValue().getValue())));
         dateColumn.setCellValueFactory(cellData->new ReadOnlyStringWrapper(String.valueOf(cellData.getValue().getDate().toString())));
-        transactionsItems.addAll(controller.getTransactionsByAccount(accountChoiceBox.getValue()));
+        transactionsItems.addAll(controller.getTransactionsByAccount(accountChoiceBox.getItems().get(index)));
         transactionsTableView.setItems(transactionsItems);
     }
 }

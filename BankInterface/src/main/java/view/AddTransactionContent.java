@@ -8,11 +8,13 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import model.AccHolder;
 import model.Account;
 
 import java.net.URL;
 import java.util.ConcurrentModificationException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AddTransactionContent implements Initializable {
@@ -44,6 +46,13 @@ public class AddTransactionContent implements Initializable {
                 try {
                     controller.addTransaction(accountsListView.getSelectionModel().getSelectedItem(), recieverTextField.getText(), Double.parseDouble(amountTextField.getText()), descriptionTextField.getText());
                     setAccountsListView();
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Success");
+                    alert.setContentText("The transaction was successfully made!");
+                    Button confirm = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+                    confirm.setDefaultButton(false);
+                    confirm.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
+
                 } catch (RuntimeException exception) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");

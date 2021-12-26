@@ -12,6 +12,7 @@ public class Current extends Account {
         super(id, accHolder, initialDeposit, category, accountNr);
         this.debitCardNr = debitCardNr;
         this.debitCardPIN = debitCardPIN;
+        setRate();
     }
 
     /**
@@ -20,6 +21,7 @@ public class Current extends Account {
     public Current(int id, AccHolder accHolder, double initialDeposit) {
         super(id, accHolder, initialDeposit);
         init();
+        setRate();
     }
 
     private void init()
@@ -45,6 +47,11 @@ public class Current extends Account {
     private void setDebitCard () {
         debitCardNr = (int)(Math.random() * Math.pow(10,12));
         debitCardPIN = (int)(Math.random() * Math.pow(10,4));
+    }
+
+    @Override
+    public String toString() {
+        return super.toString()+","+debitCardNr;
     }
 
     public void showInfo() {

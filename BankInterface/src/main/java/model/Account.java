@@ -148,6 +148,11 @@ public abstract class Account extends BaseModel implements IRate {
         }
     }
 
+    @Override
+    public String toString() {
+        return this.accNumber.toString()+","+this.category.getName()+","+String.valueOf(this.balance)+","+String.valueOf(this.rate);
+    }
+
     public ArrayList<Transaction> getTransactionsByCategory(Category category) {
         ArrayList<Transaction> transactionsByCateg = new ArrayList<>();
         ArrayList<Transaction> transactions = getTransactions();

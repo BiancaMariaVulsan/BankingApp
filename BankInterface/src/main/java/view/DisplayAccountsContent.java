@@ -60,6 +60,8 @@ public class DisplayAccountsContent implements Initializable {
         currentsItems.clear();
         accNumberCurrentColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getAccNumber()));
         cardNumberCurrentColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(String.valueOf(cellData.getValue().getDebitCardNr())));
+        balanceCurrentColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(String.valueOf(cellData.getValue().getBalance())));
+        rateCurrentColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(String.valueOf(cellData.getValue().getRate())));
         currentsItems.addAll(controller.getCurrentsByUser(accHolder));
         System.out.println("Currents :");
         LinkedHashSet<Current> currentsSet = new LinkedHashSet<>(controller.getCurrentsByUser(accHolder));
@@ -73,12 +75,14 @@ public class DisplayAccountsContent implements Initializable {
         System.out.println("Savings :");
         accNumberSavingsColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getAccNumber()));
         cardNumberSavingsColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(String.valueOf(cellData.getValue().getSafetyDepositBoxId())));
+        balanceSavingsColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(String.valueOf(cellData.getValue().getBalance())));
+        rateSavingsColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(String.valueOf(cellData.getValue().getRate())));
         savingsItems.addAll(controller.getSavingsByUser(accHolder));
         LinkedHashSet<Savings> savingsSet = new LinkedHashSet<>(controller.getSavingsByUser(accHolder));
         System.out.println(accHolder.getFirstName());
         for (Account saving : savingsSet) {
             System.out.println(saving.getAccNumber());
-            System.out.println(saving.getBalance());
+            System.out.println(saving.getRate());
         }
         System.out.println("Over");
         savingsTableView.setItems(savingsItems);

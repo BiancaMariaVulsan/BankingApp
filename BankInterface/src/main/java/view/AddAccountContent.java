@@ -8,11 +8,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import model.AccHolder;
 
 import java.io.Console;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AddAccountContent implements Initializable {
@@ -58,6 +60,14 @@ public class AddAccountContent implements Initializable {
                     } else {
                         controller.addAccountSavings(Double.parseDouble(initialDepositTextField.getText()), accHolder);
                     }
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Success");
+                    alert.setContentText("The account was successfully created!");
+                    Button confirm = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+                    confirm.setDefaultButton(false);
+                    confirm.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
+
+
                 } catch (RuntimeException exception) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");

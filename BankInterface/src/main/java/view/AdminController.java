@@ -60,6 +60,7 @@ public class AdminController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        populateTableUsers();
         exitButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -115,34 +116,41 @@ public class AdminController implements Initializable {
         usersTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                Stage programStage = new Stage();
-                Parent programRoot;
-                AccHolder accHolder = controller.getAccHolderByUsername(usersTableView.getSelectionModel().getSelectedItem().getUserName());
-                Callback<Class<?>, Object> controllerFactory = type -> {
-                    if (type == InspectUserController.class) {
-                        return new InspectUserController(accHolder,controller);
-                    } else {
-                        try {
-                            return type.newInstance() ;
-                        } catch (Exception exc) {
-                            System.err.println("Could not load inspect user controller "+type.getName());
-                            throw new RuntimeException(exc);
-                        }
+                if (mouseEvent.getClickCount() == 2) {
+                    Stage programStage = new Stage();
+                    Parent programRoot;
+                    if (usersTableView.getSelectionModel().getSelectedItem() == null) {
+                        usersTableView.getSelectionModel().select(0);
                     }
-                };
-                try {
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("inspect-user-view.fxml"));
-                    fxmlLoader.setControllerFactory(controllerFactory);
-                    fxmlLoader.setLocation(getClass().getResource("inspect-user-view.fxml"));
-                    programRoot = fxmlLoader.load();
-                    Scene programScene = new Scene(programRoot);
-                    String css = this.getClass().getResource("start.css").toExternalForm();
-                    programScene.getStylesheets().add(css);
-                    programStage.setTitle("User");
-                    programStage.setScene(programScene);
-                    programStage.show();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
+                    if (usersItems.size() == 0)
+                        return;
+                    AccHolder accHolder = controller.getAccHolderByUsername(usersTableView.getSelectionModel().getSelectedItem().getUserName());
+                    Callback<Class<?>, Object> controllerFactory = type -> {
+                        if (type == InspectUserController.class) {
+                            return new InspectUserController(accHolder, controller);
+                        } else {
+                            try {
+                                return type.newInstance();
+                            } catch (Exception exc) {
+                                System.err.println("Could not load inspect user controller " + type.getName());
+                                throw new RuntimeException(exc);
+                            }
+                        }
+                    };
+                    try {
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("inspect-user-view.fxml"));
+                        fxmlLoader.setControllerFactory(controllerFactory);
+                        fxmlLoader.setLocation(getClass().getResource("inspect-user-view.fxml"));
+                        programRoot = fxmlLoader.load();
+                        Scene programScene = new Scene(programRoot);
+                        String css = this.getClass().getResource("start.css").toExternalForm();
+                        programScene.getStylesheets().add(css);
+                        programStage.setTitle("User");
+                        programStage.setScene(programScene);
+                        programStage.show();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
                 }
             }
         });
@@ -150,12 +158,14 @@ public class AdminController implements Initializable {
 
     public void populateTableUsers(){
         usersItems.clear();
+        usersTableView.getItems().clear();
         firstNameColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getFirstName()));
         lastNameColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getLastName()));
         CNPColumn.setCellValueFactory(cellData->new ReadOnlyStringWrapper(String.valueOf(cellData.getValue().getCnp())));
         usernameColumn.setCellValueFactory(cellData->new ReadOnlyStringWrapper(String.valueOf(cellData.getValue().getUserName())));
         usersItems.addAll(controller.getAllAccountHolders());
         usersTableView.setItems(usersItems);
+        System.out.println("START");
         for(AccHolder accHolder : controller.getAllAccountHolders()) {
             System.out.println(accHolder.getFirstName());
         }

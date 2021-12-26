@@ -11,6 +11,7 @@ public class Savings extends Account {
     public Savings(int id, AccHolder accHolder, double initialDeposit) {
         super(id, accHolder, initialDeposit);
         init();
+        setRate();
     }
 
     /**
@@ -20,6 +21,12 @@ public class Savings extends Account {
         super(id, accHolder, initialDeposit, category, accountNr);
         this.safetyDepositBoxId = safetyDepositBoxId;
         this.safetyDepositBoxKey = safetyDepositBoxKey;
+        setRate();
+    }
+
+    @Override
+    public String toString() {
+        return super.toString()+","+safetyDepositBoxId;
     }
 
     private void init()

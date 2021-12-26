@@ -39,17 +39,26 @@ public class Controller {
         if (initialDeposit < 50)
             throw new RuntimeException("You have to deposit at least 50$ initially!");
         Savings savings = new Savings(1, accHolder, initialDeposit);
-        if(!savingsAccRepository.checkIfObjectAlreadyExists(savings)) {
-            accHolder.createAccount(savings);
-        }
+        System.out.println(savings);
+//        if(!savingsAccRepository.checkIfObjectAlreadyExists(savings)) {
+//        }
+//        else {
+//            System.out.println("Already exists");
+//        }
+        accHolder.createAccount(savings);
+
     }
     public void addAccountCurrent(double initialDeposit, AccHolder accHolder){
         if (initialDeposit < 50)
             throw new RuntimeException("You have to deposit at least 50$ initially!");
         Current current = new Current(1,accHolder,initialDeposit);
-        if(!currentAccRepository.checkIfObjectAlreadyExists(current)) {
-            accHolder.createAccount(current);
-        }
+        System.out.println(current);
+//        if(!currentAccRepository.checkIfObjectAlreadyExists(current)) {
+//        }
+//        else {
+//            System.out.println("Already exists");
+//        }
+        accHolder.createAccount(current);
     }
     public void addTransaction(Account senderAcc, String reciever, double value, String descriprion) {
         Account receiverAcc = savingsAccRepository.selectByAccountNr(reciever);

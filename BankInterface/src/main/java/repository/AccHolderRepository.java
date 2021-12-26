@@ -14,14 +14,13 @@ import java.util.logging.Level;
 
 public class AccHolderRepository extends Repository {
 
-    private ArrayList<AccHolder> accHolders = new ArrayList<>();
-
     public AccHolderRepository() {
         super("accholder");
     }
 
     @Override
     protected ArrayList<AccHolder> createObjects(ResultSet resultSet) {
+        ArrayList<AccHolder> accHolders = new ArrayList<>();
         try{
             while (resultSet.next())
             {
