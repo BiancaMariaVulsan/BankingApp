@@ -29,7 +29,8 @@ public class StatisticsContent implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         transactionsChart.setTitle("Transactions");
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-        ArrayList<Category> categories = controller.getAllCategoriesName();
+        ArrayList<Category> categories = new ArrayList<>();
+        categories  = controller.getAllCategoriesName();
         for (Category category : categories){
             PieChart.Data data = new PieChart.Data(category.getName(),controller.getNumberOfTransactionByCategory(accHolder,category));
             pieChartData.add(data);

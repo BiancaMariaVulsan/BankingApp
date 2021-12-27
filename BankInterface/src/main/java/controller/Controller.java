@@ -100,8 +100,7 @@ public class Controller {
     }
 
     public ArrayList<Category> getAllCategoriesName(){
-        ArrayList<Category> categories = categoryRepository.selectAllEntities();
-        return categories;
+        return categoryRepository.selectAllEntities();
     }
 
     public int getNumberOfTransactionByCategory(AccHolder accHolder,Category category){
